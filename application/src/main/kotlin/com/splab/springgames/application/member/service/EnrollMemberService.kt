@@ -1,7 +1,7 @@
-package com.splab.springgames.applicationon.member.service
+package com.splab.springgames.application.member.service
 
-import com.splab.springgames.applicationon.member.port.inbound.EnrollMemberUseCase
-import com.splab.springgames.applicationon.member.port.outbound.MemberRepository
+import com.splab.springgames.application.member.port.inbound.EnrollMemberUseCase
+import com.splab.springgames.application.member.port.outbound.MemberRepository
 import com.splab.springgames.domain.member.domain.Member
 import org.springframework.stereotype.Component
 

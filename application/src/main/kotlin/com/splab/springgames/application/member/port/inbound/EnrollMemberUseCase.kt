@@ -1,4 +1,4 @@
-package com.splab.springgames.applicationon.member.port.inbound
+package com.splab.springgames.application.member.port.inbound
 
 import com.splab.springgames.domain.member.vo.Email
 import com.splab.springgames.domain.member.vo.Name

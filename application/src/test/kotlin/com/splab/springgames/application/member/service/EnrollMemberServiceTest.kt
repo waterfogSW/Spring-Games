@@ -1,13 +1,12 @@
-package com.splab.springgames.applicationon.member.service
+package com.splab.springgames.application.member.service
 
+import com.splab.springgames.application.member.port.inbound.EnrollMemberUseCase
 import com.splab.springgames.application.port.outbound.MemberRepositorySpy
-import com.splab.springgames.applicationon.member.port.inbound.EnrollMemberUseCase
 import com.splab.springgames.domain.member.vo.Email
 import com.splab.springgames.domain.member.vo.Name
 import com.splab.springgames.domain.member.vo.RegisteredDate
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import java.time.LocalDateTime
 
@@ -16,6 +15,10 @@ class EnrollMemberServiceTest : DescribeSpec({
 
     val memberRepositorySpy = MemberRepositorySpy()
     val sut = EnrollMemberService(memberRepositorySpy)
+
+    afterTest {
+        memberRepositorySpy.clear()
+    }
 
     describe("회원 등록 서비스") {
         it("새로운 회원을 생성하고 저장한다") {

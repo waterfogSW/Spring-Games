@@ -1,4 +1,4 @@
-package com.splab.springgames.applicationon.member.port.outbound
+package com.splab.springgames.application.member.port.outbound
 
 import com.splab.springgames.domain.member.domain.Member
 
