@@ -10,7 +10,7 @@ plugins {
 }
 
 allprojects {
-    group = "com.student-center"
+    group = "com.splab"
     version = "0.0.1-SNAPSHOT"
 
     repositories {
