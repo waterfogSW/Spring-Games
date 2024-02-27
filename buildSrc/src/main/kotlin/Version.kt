@@ -2,6 +2,7 @@ object Version {
 
     const val JAVA = "21"
     const val KOTLIN = "1.9.22"
+    const val SPRING = "6.1.4"
     const val SPRING_BOOT = "3.2.3"
     const val SPRING_BOOT_DEPENDENCY_MANAGEMENT = "1.1.4"
 
