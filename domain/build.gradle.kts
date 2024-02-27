@@ -8,4 +8,6 @@ jar.enabled = true
 
 dependencies {
 
+    implementation(project(":support:common"))
+
 }
