@@ -16,5 +16,7 @@ object Version {
     const val H2 = "2.2.224"
     const val KOTLIN_LOGGING = "5.1.0"
     const val FLYWAY = "10.6.0"
+    const val KOTEST_EXTENSIONS_TESTCONTAINERS = "2.0.2"
+    const val TESTCONTAINERS = "1.19.6"
 
 }

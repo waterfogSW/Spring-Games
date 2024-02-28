@@ -11,7 +11,7 @@ import java.util.*
 
 
 data class Member(
-    val id: UUID,
+    val id: UUID = UuidGenerator.create(),
     val name: Name,
     val email: Email,
     val registeredDate: RegisteredDate,
@@ -28,7 +28,6 @@ data class Member(
             registeredDate: RegisteredDate,
         ): Member {
             return Member(
-                id = UuidGenerator.create(),
                 name = name,
                 email = email,
                 registeredDate = registeredDate,
