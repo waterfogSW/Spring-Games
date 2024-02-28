@@ -6,6 +6,7 @@ import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.domain.member.enum.Level
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @Service
 class QueryMemberService(
@@ -18,6 +19,10 @@ class QueryMemberService(
         level: Level?
     ): List<Member> {
         return memberRepository.searchByFilter(name, level)
+    }
+
+    override fun getById(id: UUID): Member? {
+        return memberRepository.getById(id)
     }
 
 }

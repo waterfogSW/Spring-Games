@@ -5,7 +5,9 @@ import com.splab.springgames.domain.member.enum.Level
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
+import java.util.*
 
 @Controller
 class MemberController(
@@ -28,5 +30,19 @@ class MemberController(
         }
         return "members"
     }
+
+    @GetMapping("/members/{id}")
+    fun getMember(
+        model: Model,
+        @PathVariable
+        id: UUID,
+    ): String {
+        memberUseCase
+            .getById(id)
+            .let { model.addAttribute("member", it) }
+        return "member_detail"
+
+    }
+
 
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>회원 조회</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    function confirmDelete() {
+      if (confirm("정말로 삭제할까요?")) {
+
+      }
+    }
+  </script>
+</head>
+<body>
+<div class="container my-4">
+  <div class="mb-3">
+    <a href="/members" class="btn btn-outline-primary">돌아가기</a>
+    <a href="#" th:href="@{/member/edit/{id}(id=${member.id})}" class="btn btn-primary">수정</a>
+    <button onclick="confirmDelete()" class="btn btn-danger">삭제</button>
+  </div>
+  <div>
+    <h2>회원 정보</h2>
+    <table class="table info-table">
+      <tbody>
+      <tr>
+        <th scope="row">ID</th>
+        <td><span th:text="${member.id}"></span></td>
+      </tr>
+      <tr>
+        <th scope="row">이름</th>
+        <td><span th:text="${member.name}"></span></td>
+      </tr>
+      <tr>
+        <th scope="row">이메일</th>
+        <td><span th:text="${member.email}"></span></td>
+      </tr>
+      <tr>
+        <th scope="row">가입일</th>
+        <td><span th:text="${member.registeredDate}"></span></td>
+      </tr>
+      <tr>
+        <th scope="row">레벨</th>
+        <td><span th:text="${member.level}"></span></td>
+      </tr>
+      <tr>
+        <th scope="row">게임 카드 숫자</th>
+        <td><span th:text="${member.gameCardTotalCount}"></span></td>
+      </tr>
+      <tr>
+        <th scope="row">게임 카드 금액</th>
+        <td><span th:text="${member.gameCardTotalPrice}"></span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
