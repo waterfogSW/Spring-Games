@@ -3,7 +3,6 @@ package com.splab.springgames.infrastructure.persistence.member.adapter
 import com.splab.springgames.application.member.port.outbound.MemberRepository
 import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.domain.member.enum.Level
-import com.splab.springgames.domain.member.vo.Name
 import com.splab.springgames.infrastructure.persistence.member.entity.MemberJpaEntity.Companion.toJpaEntity
 import com.splab.springgames.infrastructure.persistence.member.repository.MemberJpaRepository
 import org.springframework.stereotype.Component
@@ -20,13 +19,13 @@ class MemberJpaAdapter(
     }
 
     override fun searchByFilter(
-        name: Name?,
+        name: String?,
         level: Level?,
     ): List<Member> {
         return memberJpaRepository
             .searchByFilter(
-                name?.value,
-                level?.name
+                name = name,
+                level = level?.name
             )
             .map { it.toDomain() }
     }
