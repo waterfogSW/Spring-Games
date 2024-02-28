@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>회원 목록</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container my-4">
+  <form action="#" th:action="@{/members}" method="get" class="mb-3">
+    <div class="form-row justify-content-end align-items-end">
+      <div class="col-auto"> <!-- 이름 필드 -->
+        이름 <label>
+          <input type="text" name="name" class="form-control"/>
+        </label>
+      </div>
+      <div class="col-auto"> <!-- 레벨 드롭다운 -->
+        레벨 <label>
+          <select name="level" class="form-control">
+            <option value="">모든 레벨</option>
+            <option value="BRONZE">Bronze</option>
+            <option value="SILVER">Silver</option>
+            <option value="GOLD">Gold</option>
+          </select>
+        </label>
+      </div>
+      <div class="col-auto"> <!-- 검색 버튼 -->
+        <button type="submit" class="btn btn-outline-success">검색</button>
+      </div>
+      <div class="col-auto"> <!-- 등록 버튼 -->
+        <button type="button" onclick="location.href='/member/add'" class="btn btn-primary">회원 등록
+        </button>
+      </div>
+    </div>
+  </form>
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>이름</th>
+      <th>이메일</th>
+      <th>가입 일자</th>
+      <th>레벨</th>
+      <th>카드 갯수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="member : ${members}">
+      <td th:text="${member.id}"></td>
+      <td th:text="${member.name}"></td>
+      <td th:text="${member.email}"></td>
+      <td th:text="${member.registeredDate}"></td>
+      <td th:text="${member.level}"></td>
+      <td th:text="${member.gameCardTotalCount}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
