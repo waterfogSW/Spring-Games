@@ -16,4 +16,8 @@ dependencies {
     implementation("org.flywaydb:flyway-mysql:${Version.FLYWAY}")
 
     runtimeOnly("mysql:mysql-connector-java:${Version.MYSQL}")
+    testRuntimeOnly("com.h2database:h2:${Version.H2}")
+
+    testImplementation(testFixtures(project(":domain")))
+
 }

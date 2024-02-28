@@ -46,6 +46,8 @@ subprojects {
         testImplementation("io.kotest.extensions:kotest-extensions-spring:${Version.KOTEST_EXTENSIONS_SPRING}")
         testImplementation("org.springframework.boot:spring-boot-starter-test:${Version.SPRING_BOOT}")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:${Version.KOTEST_EXTENSIONS_SPRING}")
+        testImplementation("io.kotest.extensions:kotest-extensions-testcontainers:${Version.KOTEST_EXTENSIONS_TESTCONTAINERS}")
+        testImplementation("org.testcontainers:junit-jupiter:${Version.TESTCONTAINERS}")
     }
 
     java {
