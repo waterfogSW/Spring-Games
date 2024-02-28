@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  shutdown: graceful
+spring:
+  profiles:
+    active: local
+    include:
+      - persistence
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  docker:
+    compose:
+      file: ./bootstrap/ui/compose-local.yaml
