@@ -15,5 +15,6 @@ object Version {
     const val MYSQL = "8.0.33"
     const val H2 = "2.2.224"
     const val KOTLIN_LOGGING = "5.1.0"
+    const val FLYWAY = "10.6.0"
 
 }
