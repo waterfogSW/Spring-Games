@@ -9,12 +9,12 @@ value class RegisteredDate(val value: LocalDateTime) {
 
     companion object {
 
-        private const val VALIDATION_MESSAGE = "가입일은 현재 시간 또는 1년 이내로 입력해주세요."
+        private const val VALIDATION_MESSAGE = "가입일은 현재 시간 부터 1년 이내로 입력해주세요."
 
         fun create(value: LocalDateTime): RegisteredDate {
             if (isWithinOneYearFromNow(value).not()) {
                 throw CustomException(
-                    type = MemberExceptionType.INVALID_REGISTER_DATE_INPUT,
+                    type = MemberExceptionType.ENROLLMENT_INVALID_REGISTER_DATE_INPUT,
                     message = VALIDATION_MESSAGE
                 )
             }

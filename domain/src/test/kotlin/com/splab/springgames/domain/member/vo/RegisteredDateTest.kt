@@ -15,10 +15,10 @@ class RegisteredDateTest : DescribeSpec({
             LocalDateTime.now(),
             LocalDateTime.now().minusYears(1).plusSeconds(1)
         ).forEach { time ->
-            context("성공 - 현재 시간 또는 1년 이내로 입력하면 / time: $time") {
+            context("성공 - 현재 시간 부터 1년 이내로 입력하면 / time: $time") {
                 it("가입일을 생성한다.") {
                     // act
-                    val registeredDate: RegisteredDate = RegisteredDate(time)
+                    val registeredDate: RegisteredDate = RegisteredDate.create(time)
 
                     // assert
                     registeredDate.value shouldBe time
@@ -34,7 +34,7 @@ class RegisteredDateTest : DescribeSpec({
                 it("예외를 던진다.") {
                     // act, assert
                     shouldThrow<IllegalArgumentException> {
-                        RegisteredDate(time)
+                        RegisteredDate.create(time)
                     }
                 }
             }
