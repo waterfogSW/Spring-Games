@@ -1,17 +1,15 @@
 package com.splab.springgames.application.member.port.inbound
 
-import com.splab.springgames.domain.member.vo.Email
-import com.splab.springgames.domain.member.vo.Name
-import com.splab.springgames.domain.member.vo.RegisteredDate
+import java.time.LocalDateTime
 
 interface EnrollMemberUseCase {
 
     fun invoke(command: Command)
 
     data class Command(
-        val name: Name,
-        val email: Email,
-        val registeredDate: RegisteredDate,
+        val name: String,
+        val email: String,
+        val registeredDate: LocalDateTime,
     )
 
 }

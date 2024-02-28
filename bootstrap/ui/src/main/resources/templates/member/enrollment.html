@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>회원 등록</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h2>회원 등록</h2>
+  <form action="/members" method="post">
+    <div class="form-group">
+      <label for="name">이름</label>
+      <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="이름을 입력하세요"
+          required
+      >
+    </div>
+    <div class="form-group">
+      <label for="email">이메일</label>
+      <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="이메일을 입력하세요"
+          required>
+    </div>
+    <div class="form-group">
+      <label for="registeredDate">가입일자</label>
+      <input
+          type="date"
+          class="form-control"
+          id="registeredDate"
+          name="registeredDate"
+          required
+      >
+    </div>
+    <button type="submit" class="btn btn-primary">등록</button>
+    <button type="button" class="btn btn-secondary" onclick="location.href='/members'">취소</button>
+  </form>
+</div>
+</body>
+</html>
