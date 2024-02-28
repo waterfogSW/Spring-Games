@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
   <title>회원 등록</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -11,41 +11,77 @@
 <body>
 <div class="container">
   <h2>회원 등록</h2>
-  <form action="/members" method="post">
+  <form id="enrollmentForm">
     <div class="form-group">
       <label for="name">이름</label>
-      <input
-          type="text"
-          class="form-control"
-          id="name"
-          name="name"
-          placeholder="이름을 입력하세요"
-          required
-      >
+      <input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요"
+             required>
+      <div class="error" id="nameError"></div>
     </div>
     <div class="form-group">
       <label for="email">이메일</label>
-      <input
-          type="email"
-          class="form-control"
-          id="email"
-          name="email"
-          placeholder="이메일을 입력하세요"
-          required>
+      <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요"
+             required>
+      <div class="error" id="emailError"></div>
     </div>
     <div class="form-group">
       <label for="registeredDate">가입일자</label>
-      <input
-          type="date"
-          class="form-control"
-          id="registeredDate"
-          name="registeredDate"
-          required
-      >
+      <input type="date" class="form-control" id="registeredDate" name="registeredDate" required>
+      <div class="error" id="dateError"></div>
     </div>
-    <button type="submit" class="btn btn-primary">등록</button>
+    <button type="button" id="submitBtn" class="btn btn-primary">등록</button>
     <button type="button" class="btn btn-secondary" onclick="location.href='/members'">취소</button>
   </form>
 </div>
 </body>
+<script>
+  const getElement = id => document.getElementById(id);
+  const handleErrorMessage = (elementId, message) => getElement(elementId).innerText = message;
+  const createMember = async data => {
+    return await fetch('/api/members', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data),
+    });
+  };
+
+  getElement('submitBtn').addEventListener('click', async function (e) {
+    e.preventDefault();
+    ['nameError', 'emailError', 'dateError'].forEach(id => handleErrorMessage(id, ''));
+
+    const formData = {
+      name: getElement('name').value || '',
+      email: getElement('email').value || '',
+      registeredDate: getElement('registeredDate').value || '',
+    };
+
+    const response = await createMember(formData);
+
+    if (response.status === 201) {
+      alert('등록되었습니다.');
+      location.href = '/members';
+    } else {
+      const data = await response.json();
+      switch (data.code) {
+        case 'MEMBER-001':
+        case 'MEMBER-004':
+          handleErrorMessage('emailError', data.message);
+          break;
+        case 'MEMBER-002':
+          handleErrorMessage('dateError', data.message);
+          break;
+        case 'MEMBER-003':
+          handleErrorMessage('nameError', data.message);
+          break;
+        default:
+          console.error('An unhandled error occurred:', data);
+      }
+    }
+  });
+</script>
+<style>
+  .error {
+    color: red;
+  }
+</style>
 </html>

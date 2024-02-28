@@ -7,15 +7,13 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
-import java.time.LocalDate
 import java.util.*
 
 @Controller
 @RequestMapping("/members")
-class MemberController(
+class MemberViewController(
     private val queryMemberUseCase: QueryMemberUseCase,
     private val enrollMemberUseCase: EnrollMemberUseCase,
 ) {
@@ -52,25 +50,6 @@ class MemberController(
     @GetMapping("enrollment")
     fun getEnrollmentForm(): String {
         return "member/enrollment"
-    }
-
-    @PostMapping
-    fun enrollMember(
-        @RequestParam
-        name: String,
-        @RequestParam
-        email: String,
-        @RequestParam
-        registeredDate: LocalDate,
-    ): String {
-        EnrollMemberUseCase.Command(
-            name = name,
-            email = email,
-            registeredDate = registeredDate.atStartOfDay(),
-        ).also {
-            enrollMemberUseCase.invoke(it)
-        }
-        return "redirect:/members"
     }
 
 }

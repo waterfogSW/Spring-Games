@@ -3,6 +3,7 @@ package com.splab.springgames.infrastructure.persistence.member.adapter
 import com.splab.springgames.application.member.port.outbound.MemberRepository
 import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.domain.member.enum.Level
+import com.splab.springgames.domain.member.vo.Email
 import com.splab.springgames.infrastructure.persistence.member.entity.MemberJpaEntity.Companion.toJpaEntity
 import com.splab.springgames.infrastructure.persistence.member.repository.MemberJpaRepository
 import org.springframework.stereotype.Component
@@ -31,11 +32,18 @@ class MemberJpaAdapter(
             .map { it.toDomain() }
     }
 
-    override fun getById(id: UUID): Member? {
+    override fun getById(id: UUID): Member {
         return memberJpaRepository
             .findById(id)
             .map { it.toDomain() }
-            .orElse(null)
+            .orElseThrow { NoSuchElementException("ID=${id} 에 해당하는 회원이 없습니다") }
     }
+
+    override fun findByEmail(email: Email): Member? {
+        return memberJpaRepository
+            .findByEmail(email.value)
+            ?.toDomain()
+    }
+
 
 }

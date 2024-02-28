@@ -23,4 +23,6 @@ interface MemberJpaRepository : JpaRepository<MemberJpaEntity, UUID> {
         level: String?,
     ): List<MemberJpaEntity>
 
+    fun findByEmail(email: String): MemberJpaEntity?
+
 }
