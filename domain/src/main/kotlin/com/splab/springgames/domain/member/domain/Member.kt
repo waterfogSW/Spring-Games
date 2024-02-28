@@ -33,7 +33,7 @@ data class Member(
                 registeredDate = registeredDate,
                 level = Level.BROZNE,
                 gameCardTotalCount = GameCardTotalCount(0),
-                gameCardTotalPrice = GameCardTotalPrice(0)
+                gameCardTotalPrice = GameCardTotalPrice(0.toBigDecimal())
             )
         }
 

@@ -17,7 +17,7 @@ object MemberFixtureFactory {
         registeredDate: LocalDateTime = LocalDateTime.now(),
         level: Level = Level.BROZNE,
         gameCardTotalCount: GameCardTotalCount = GameCardTotalCount(0),
-        gameCardTotalPrice: GameCardTotalPrice = GameCardTotalPrice(0),
+        gameCardTotalPrice: GameCardTotalPrice = GameCardTotalPrice(0.toBigDecimal()),
     ): Member {
         return Member(
             name = Name(name),
