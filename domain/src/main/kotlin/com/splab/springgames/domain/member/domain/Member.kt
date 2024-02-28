@@ -7,6 +7,7 @@ import com.splab.springgames.domain.member.vo.GameCardTotalPrice
 import com.splab.springgames.domain.member.vo.Name
 import com.splab.springgames.domain.member.vo.RegisteredDate
 import com.splab.springgames.support.common.uuid.UuidGenerator
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -23,14 +24,14 @@ data class Member(
     companion object {
 
         fun create(
-            name: Name,
-            email: Email,
-            registeredDate: RegisteredDate,
+            name: String,
+            email: String,
+            registeredDate: LocalDateTime,
         ): Member {
             return Member(
-                name = name,
-                email = email,
-                registeredDate = registeredDate,
+                name = Name.create(name),
+                email = Email.create(email),
+                registeredDate = RegisteredDate.create(registeredDate),
                 level = Level.BRONZE,
                 gameCardTotalCount = GameCardTotalCount(0),
                 gameCardTotalPrice = GameCardTotalPrice(0.toBigDecimal())
