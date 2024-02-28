@@ -17,7 +17,7 @@ value class Name(val value: String) {
         fun create(value: String): Name {
             if ((value.length in 2..100).not()) {
                 throw CustomException(
-                    type = MemberExceptionType.INVALID_NAME_INPUT,
+                    type = MemberExceptionType.ENROLLMENT_INVALID_NAME_INPUT,
                     message = VALIDATION_MESSAGE
                 )
             }
