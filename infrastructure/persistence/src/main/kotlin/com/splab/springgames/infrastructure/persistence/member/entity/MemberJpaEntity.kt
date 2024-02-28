@@ -13,6 +13,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
 
@@ -26,7 +27,7 @@ class MemberJpaEntity(
     registeredDate: LocalDateTime,
     level: Level,
     gameCardTotalCount: Int,
-    gameCardTotalPrice: Int,
+    gameCardTotalPrice: BigDecimal,
 ) {
 
     @Id
@@ -55,7 +56,7 @@ class MemberJpaEntity(
         private set
 
     @Column(nullable = false, updatable = true)
-    var gameCardTotalPrice: Int = gameCardTotalPrice
+    var gameCardTotalPrice: BigDecimal = gameCardTotalPrice
         private set
 
     fun toDomain(): Member {
