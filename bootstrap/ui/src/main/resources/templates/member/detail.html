@@ -18,8 +18,8 @@
 <body>
 <div class="container my-4">
   <div class="mb-3">
-    <a href="/members" class="btn btn-outline-primary">돌아가기</a>
-    <a href="#" th:href="@{/member/edit/{id}(id=${member.id})}" class="btn btn-primary">수정</a>
+    <button onclick="history.back()" class="btn btn-outline-secondary">돌아가기</button>
+    <a th:href="@{/members/{id}/edit(id=${member.id})}" class="btn btn-outline-secondary">수정</a>
     <button onclick="confirmDelete()" class="btn btn-danger">삭제</button>
   </div>
   <div>

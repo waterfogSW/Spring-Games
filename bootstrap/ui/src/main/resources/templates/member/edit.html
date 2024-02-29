@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>회원 수정</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h2>회원 수정</h2>
+  <form id="updateForm">
+    <div class="form-group">
+      <label for="memberId">회원 ID</label>
+      <input
+          type="text"
+          class="form-control"
+          id="memberId"
+          name="memberId"
+          th:placeholder="${member.id}"
+          readonly
+      >
+    </div>
+    <div class="form-group">
+      <label for="name">이름</label>
+      <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          th:value="${member.name}"
+          required
+      >
+      <div class="error" id="nameError"></div>
+    </div>
+    <div class="form-group">
+      <label for="email">이메일</label>
+      <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          th:value="${member.email}"
+          required
+      >
+      <div class="error" id="emailError"></div>
+    </div>
+    <div class="form-group">
+      <label for="registeredDate">가입일자</label>
+      <input
+          type="date"
+          class="form-control"
+          id="registeredDate"
+          name="registeredDate"
+          th:value="${member.registeredDate}"
+          required
+      >
+      <div class="error" id="dateError"></div>
+    </div>
+    <button type="button" class="btn btn-primary" id="updateBtn">수정</button>
+    <button type="button" class="btn btn-secondary" onclick="history.back()">취소</button>
+  </form>
+</div>
+</body>
+<script>
+  const getElement = id => document.getElementById(id);
+  const memberId = window.location.pathname.split('/')[2]
+  const handleErrorMessage = (elementId, message) => getElement(elementId).innerText = message;
+  const updateMember = async data => {
+    return await fetch(`/api/members/${memberId}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data),
+    });
+  };
+
+  getElement('updateBtn').addEventListener('click', async function (e) {
+    e.preventDefault();
+    ['nameError', 'emailError', 'dateError'].forEach(id => handleErrorMessage(id, ''));
+
+    const formData = {
+      name: getElement('name').value || '',
+      email: getElement('email').value || '',
+      registeredDate: getElement('registeredDate').value || '',
+    };
+
+    const response = await updateMember(formData);
+
+    if (response.status === 204) {
+      alert('수정되었습니다.');
+      location.href = `/members/${memberId}`;
+    } else {
+      const data = await response.json();
+      switch (data.code) {
+        case 'MEMBER-001':
+        case 'MEMBER-004':
+          handleErrorMessage('emailError', data.message);
+          break;
+        case 'MEMBER-002':
+          handleErrorMessage('dateError', data.message);
+          break;
+        case 'MEMBER-003':
+          handleErrorMessage('nameError', data.message);
+          break;
+        default:
+          console.error('An unhandled error occurred:', data);
+      }
+    }
+  });
+</script>
+<style>
+  .error {
+    color: red;
+  }
+</style>
+</html>
