@@ -1,10 +1,12 @@
 package com.splab.springgames.bootstrap.ui.member.adapter
 
+import com.splab.springgames.application.member.port.inbound.DeleteMemberUseCase
 import com.splab.springgames.application.member.port.inbound.EditMemberUseCase
 import com.splab.springgames.application.member.port.inbound.EnrollMemberUseCase
 import com.splab.springgames.bootstrap.ui.member.dto.EditMemberRequest
 import com.splab.springgames.bootstrap.ui.member.dto.EnrollMemberRequest
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -19,6 +21,7 @@ import java.util.*
 class MemberRestController(
     private val enrollMemberUseCase: EnrollMemberUseCase,
     private val editMemberUseCase: EditMemberUseCase,
+    private val deleteMemberUseCase: DeleteMemberUseCase,
 ) {
 
     @PostMapping
@@ -43,6 +46,15 @@ class MemberRestController(
         request
             .toCommandWith(memberId)
             .also { editMemberUseCase.invoke(it) }
+    }
+
+    @DeleteMapping("/{memberId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteMember(
+        @PathVariable
+        memberId: UUID
+    ) {
+        deleteMemberUseCase.invoke(memberId)
     }
 
 }

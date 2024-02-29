@@ -7,20 +7,13 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script>
-    function confirmDelete() {
-      if (confirm("정말로 삭제할까요?")) {
-
-      }
-    }
-  </script>
 </head>
 <body>
 <div class="container my-4">
   <div class="mb-3">
     <button onclick="history.back()" class="btn btn-outline-secondary">돌아가기</button>
     <a th:href="@{/members/{id}/edit(id=${member.id})}" class="btn btn-outline-secondary">수정</a>
-    <button onclick="confirmDelete()" class="btn btn-danger">삭제</button>
+    <button id="deleteBtn" class="btn btn-danger">삭제</button>
   </div>
   <div>
     <h2>회원 정보</h2>
@@ -59,4 +52,25 @@
   </div>
 </div>
 </body>
+<script>
+  const getElement = id => document.getElementById(id);
+  const memberId = window.location.pathname.split('/')[2];
+  getElement('deleteBtn').addEventListener('click', async function (e) {
+    e.preventDefault();
+    if (confirm("정말로 삭제할까요?")) {
+      deleteMember(memberId)
+      .then(response => {
+        if (response.status === 204) {
+          alert('삭제되었습니다.');
+          location.href = '/members';
+        }
+      });
+    }
+  });
+  const deleteMember = async id => {
+    return await fetch(`/api/members/${id}`, {
+      method: 'DELETE',
+    });
+  };
+</script>
 </html>
