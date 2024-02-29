@@ -8,4 +8,5 @@ enum class MemberExceptionType(override val code: String) : CustomExceptionType 
     INVALID_NAME_INPUT("MEMBER-003"),
     DUPLICATED_EMAIL_INPUT("MEMBER-004"),
     INVALID_ID_INPUT("MEMBER-005"),
+    MEMBER_NOT_FOUND("MEMBER-006"),
 }
