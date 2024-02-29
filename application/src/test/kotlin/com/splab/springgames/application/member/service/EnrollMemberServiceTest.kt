@@ -1,7 +1,7 @@
 package com.splab.springgames.application.member.service
 
 import com.splab.springgames.application.member.port.inbound.EnrollMemberUseCase
-import com.splab.springgames.application.port.outbound.MemberRepositorySpy
+import com.splab.springgames.application.member.port.outbound.MemberRepositorySpy
 import com.splab.springgames.domain.member.vo.Email
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec

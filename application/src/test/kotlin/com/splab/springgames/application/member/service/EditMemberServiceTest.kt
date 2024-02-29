@@ -1,7 +1,7 @@
 package com.splab.springgames.application.member.service
 
 import com.splab.springgames.application.member.port.inbound.EditMemberUseCase
-import com.splab.springgames.application.port.outbound.MemberRepositorySpy
+import com.splab.springgames.application.member.port.outbound.MemberRepositorySpy
 import com.splab.springgames.domain.member.MemberFixtureFactory
 import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.domain.member.vo.Email
