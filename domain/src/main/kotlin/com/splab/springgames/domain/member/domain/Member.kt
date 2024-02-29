@@ -21,6 +21,18 @@ data class Member(
     val gameCardTotalPrice: GameCardTotalPrice,
 ) {
 
+    fun update(
+        name: String,
+        email: String,
+        registeredDate: LocalDate,
+    ): Member {
+        return this.copy(
+            name = Name.create(name),
+            email = Email.create(email),
+            registeredDate = RegisteredDate.create(registeredDate)
+        )
+    }
+
     companion object {
 
         fun create(
