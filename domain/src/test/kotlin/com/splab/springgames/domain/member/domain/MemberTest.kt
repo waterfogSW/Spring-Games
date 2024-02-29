@@ -1,5 +1,6 @@
 package com.splab.springgames.domain.member.domain
 
+import com.splab.springgames.domain.member.MemberFixtureFactory
 import com.splab.springgames.domain.member.enum.Level
 import com.splab.springgames.domain.member.vo.Email
 import com.splab.springgames.domain.member.vo.Name
@@ -30,6 +31,26 @@ class MemberTest : DescribeSpec({
                 member.gameCardTotalCount.value shouldBe 0
                 member.gameCardTotalPrice.value shouldBe 0.toBigDecimal()
                 member.level shouldBe Level.BRONZE
+            }
+        }
+    }
+
+    describe("회원 수정") {
+        context("성공 - 요청 값이 유효하면") {
+            it("회원을 수정한다.") {
+                // arrange
+                val member: Member = MemberFixtureFactory.create()
+                val updateName = "김철수"
+                val updateEmail = "msa@naver.com"
+                val updateRegisteredDate: LocalDate = LocalDate.now().minusDays(1)
+
+                // act
+                val updatedMember: Member = member.update(updateName, updateEmail, updateRegisteredDate)
+
+                // assert
+                updatedMember.name shouldBe Name(updateName)
+                updatedMember.email shouldBe Email(updateEmail)
+                updatedMember.registeredDate shouldBe RegisteredDate(updateRegisteredDate)
             }
         }
     }
