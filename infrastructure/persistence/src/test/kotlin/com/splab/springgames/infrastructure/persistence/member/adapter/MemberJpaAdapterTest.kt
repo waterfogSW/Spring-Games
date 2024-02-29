@@ -3,10 +3,14 @@ package com.splab.springgames.infrastructure.persistence.member.adapter
 import com.splab.springgames.domain.member.MemberFixtureFactory
 import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.domain.member.enum.Level
-import com.splab.springgames.domain.member.vo.Name
 import com.splab.springgames.infrastructure.persistence.member.repository.MemberJpaRepository
+import com.splab.springgames.support.common.exception.CustomException
+import com.splab.springgames.support.common.uuid.UuidGenerator
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.annotation.DisplayName
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
+import kotlin.jvm.optionals.getOrNull
 
 @DisplayName("MemberJpaAdapter")
 class MemberJpaAdapterTest(
@@ -16,6 +20,21 @@ class MemberJpaAdapterTest(
 
     afterTest {
         memberJpaRepository.deleteAll()
+    }
+
+    describe("save") {
+        it("회원을 저장한다") {
+            // arrange
+            val member: Member = MemberFixtureFactory.create()
+
+            // act
+            sut.save(member)
+
+            // assert
+            val result: Member? = memberJpaRepository.findById(member.id).getOrNull()?.toDomain()
+            result shouldNotBe null
+            result!!.id shouldBe member.id
+        }
     }
 
     describe("searchByFilter") {
@@ -59,6 +78,47 @@ class MemberJpaAdapterTest(
                 // assert
                 result.size shouldBe 1
             }
+        }
+    }
+
+    describe("getById") {
+        it("ID값에 해당하는 회원을 반환한다") {
+            // arrange
+            val member: Member = MemberFixtureFactory.create()
+            sut.save(member)
+
+            // act
+            val result: Member = sut.getById(member.id)
+
+            // assert
+            result.id shouldBe member.id
+        }
+
+        context("ID값에 해당하는 회원이 없는 경우") {
+            it("CustomException을 반환한다") {
+                // act
+                val result: Throwable = shouldThrow<CustomException> {
+                    sut.getById(UuidGenerator.create())
+                }
+
+                // assert
+                result.message shouldBe "회원을 찾을 수 없습니다."
+            }
+        }
+    }
+
+    describe("findByEmail") {
+        it("이메일에 해당하는 회원을 반환한다") {
+            // arrange
+            val member: Member = MemberFixtureFactory.create()
+            sut.save(member)
+
+            // act
+            val result: Member? = sut.findByEmail(member.email)
+
+            // assert
+            result shouldNotBe null
+            result!!.id shouldBe member.id
         }
     }
 
