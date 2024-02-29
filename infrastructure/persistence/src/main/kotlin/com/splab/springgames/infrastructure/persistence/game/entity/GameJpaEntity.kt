@@ -1,6 +1,6 @@
 package com.splab.springgames.infrastructure.persistence.game.entity
 
-import com.splab.springgames.domain.game.entity.Game
+import com.splab.springgames.domain.game.domain.Game
 import com.splab.springgames.domain.game.vo.GameName
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

@@ -2,7 +2,7 @@ package com.splab.springgames.application.game.service
 
 import com.splab.springgames.application.game.port.outbound.GameRepositorySpy
 import com.splab.springgames.domain.game.GameFixtureFactory
-import com.splab.springgames.domain.game.entity.Game
+import com.splab.springgames.domain.game.domain.Game
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe

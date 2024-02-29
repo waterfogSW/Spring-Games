@@ -1,6 +1,6 @@
 package com.splab.springgames.domain.game
 
-import com.splab.springgames.domain.game.entity.Game
+import com.splab.springgames.domain.game.domain.Game
 import com.splab.springgames.domain.game.vo.GameName
 import com.splab.springgames.support.common.uuid.UuidGenerator
 import java.util.UUID

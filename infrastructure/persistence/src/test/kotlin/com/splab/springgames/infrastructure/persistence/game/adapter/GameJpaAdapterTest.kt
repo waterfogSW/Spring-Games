@@ -1,6 +1,6 @@
 package com.splab.springgames.infrastructure.persistence.game.adapter
 
-import com.splab.springgames.domain.game.entity.Game
+import com.splab.springgames.domain.game.domain.Game
 import com.splab.springgames.infrastructure.persistence.PersistenceTestDescribeSpec
 import com.splab.springgames.infrastructure.persistence.game.repository.GameJpaRepository
 import io.kotest.core.annotation.DisplayName
