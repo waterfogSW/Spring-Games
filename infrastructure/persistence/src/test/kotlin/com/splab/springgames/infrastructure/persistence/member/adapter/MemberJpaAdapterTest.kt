@@ -35,7 +35,7 @@ class MemberJpaAdapterTest(
                     .also { sut.save(it) }
 
                 // act
-                val result: List<Member> = sut.searchByFilter(name = Name("길동"))
+                val result: List<Member> = sut.searchByFilter(name = "길동")
 
                 // assert
                 result.size shouldBe 2
@@ -46,7 +46,7 @@ class MemberJpaAdapterTest(
             it("해당 레벨에 속하는 모든 회원을 반환한다") {
                 // arrange
                 MemberFixtureFactory
-                    .create(level = Level.BROZNE)
+                    .create(level = Level.BRONZE)
                     .also { sut.save(it) }
 
                 MemberFixtureFactory
@@ -54,7 +54,7 @@ class MemberJpaAdapterTest(
                     .also { sut.save(it) }
 
                 // act
-                val result: List<Member> = sut.searchByFilter(level = Level.BROZNE)
+                val result: List<Member> = sut.searchByFilter(level = Level.BRONZE)
 
                 // assert
                 result.size shouldBe 1

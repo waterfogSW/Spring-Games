@@ -1,6 +1,6 @@
 package com.splab.springgames.application.member.port.inbound
 
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 interface EnrollMemberUseCase {
 
@@ -9,7 +9,7 @@ interface EnrollMemberUseCase {
     data class Command(
         val name: String,
         val email: String,
-        val registeredDate: LocalDateTime,
+        val registeredDate: LocalDate,
     )
 
 }

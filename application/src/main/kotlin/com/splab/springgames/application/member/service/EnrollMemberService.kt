@@ -26,7 +26,7 @@ class EnrollMemberService(
     private fun checkDuplicatedEmail(email: String) {
         if (memberRepository.findByEmail(Email.create(email)) != null) {
             throw CustomException(
-                type = MemberExceptionType.ENROLLMENT_DUPLICATED_EMAIL_INPUT,
+                type = MemberExceptionType.DUPLICATED_EMAIL_INPUT,
                 message = "이미 등록된 이메일입니다.",
             )
         }

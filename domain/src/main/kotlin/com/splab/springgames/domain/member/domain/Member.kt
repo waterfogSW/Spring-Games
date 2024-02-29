@@ -7,7 +7,7 @@ import com.splab.springgames.domain.member.vo.GameCardTotalPrice
 import com.splab.springgames.domain.member.vo.Name
 import com.splab.springgames.domain.member.vo.RegisteredDate
 import com.splab.springgames.support.common.uuid.UuidGenerator
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.*
 
 
@@ -26,7 +26,7 @@ data class Member(
         fun create(
             name: String,
             email: String,
-            registeredDate: LocalDateTime,
+            registeredDate: LocalDate,
         ): Member {
             return Member(
                 name = Name.create(name),

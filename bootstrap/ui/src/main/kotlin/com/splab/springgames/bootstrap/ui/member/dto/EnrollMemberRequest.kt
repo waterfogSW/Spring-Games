@@ -4,7 +4,6 @@ import com.splab.springgames.application.member.port.inbound.EnrollMemberUseCase
 import com.splab.springgames.domain.member.exception.MemberExceptionType
 import com.splab.springgames.support.common.exception.CustomException
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 data class EnrollMemberRequest(
     val name: String?,
@@ -12,7 +11,7 @@ data class EnrollMemberRequest(
     val registeredDate: LocalDate?,
 ) {
 
-    fun toCommand() : EnrollMemberUseCase.Command {
+    fun toCommand(): EnrollMemberUseCase.Command {
         return EnrollMemberUseCase.Command(
             name = getNameOrThrow(name),
             email = getEmailOrThrow(email),
@@ -23,7 +22,7 @@ data class EnrollMemberRequest(
     private fun getNameOrThrow(name: String?): String {
         if (name.isNullOrBlank()) {
             throw CustomException(
-                type = MemberExceptionType.ENROLLMENT_INVALID_NAME_INPUT,
+                type = MemberExceptionType.INVALID_NAME_INPUT,
                 message = "이름은 필수 입력값입니다."
             )
         }
@@ -33,21 +32,21 @@ data class EnrollMemberRequest(
     private fun getEmailOrThrow(email: String?): String {
         if (email.isNullOrBlank()) {
             throw CustomException(
-                type = MemberExceptionType.ENROLLMENT_INVALID_EMAIL_INPUT,
+                type = MemberExceptionType.INVALID_EMAIL_INPUT,
                 message = "이메일은 필수 입력값입니다."
             )
         }
         return email
     }
 
-    private fun getRegisteredDateOrThrow(registeredDate: LocalDate?): LocalDateTime {
+    private fun getRegisteredDateOrThrow(registeredDate: LocalDate?): LocalDate {
         if (registeredDate == null) {
             throw CustomException(
-                type = MemberExceptionType.ENROLLMENT_INVALID_REGISTER_DATE_INPUT,
+                type = MemberExceptionType.INVALID_REGISTER_DATE_INPUT,
                 message = "가입일은 필수 입력값입니다."
             )
         }
-        return registeredDate.atStartOfDay()
+        return registeredDate
     }
 
 }
