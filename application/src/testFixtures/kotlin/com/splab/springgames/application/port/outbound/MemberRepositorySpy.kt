@@ -4,7 +4,6 @@ import com.splab.springgames.application.member.port.outbound.MemberRepository
 import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.domain.member.enum.Level
 import com.splab.springgames.domain.member.vo.Email
-import com.splab.springgames.domain.member.vo.Name
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -17,17 +16,27 @@ class MemberRepositorySpy : MemberRepository {
     }
 
     override fun searchByFilter(
-        name: Name?,
+        name: String?,
         level: Level?
     ): List<Member> {
-        return bucket.values
-            .filter { name == null || it.name == name }
-            .filter { level == null || it.level == level }
+        val nameFilter = { elementName: String? ->
+            if (name == null) true
+            else elementName?.contains(name, ignoreCase = true) ?: false
+        }
 
+        val levelFilter = { elementLevel: Level? ->
+            if (level == null) true
+            else elementLevel == level
+        }
+
+        return bucket.values.filter { nameFilter(it.name.value) && levelFilter(it.level) }
     }
 
+    override fun getById(id: UUID): Member {
+        return bucket[id] ?: throw NoSuchElementException()
+    }
 
-    fun findByEmail(email: Email): Member? {
+    override fun findByEmail(email: Email): Member? {
         return bucket.values.find { it.email == email }
     }
 

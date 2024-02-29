@@ -7,15 +7,15 @@ import com.splab.springgames.domain.member.vo.GameCardTotalCount
 import com.splab.springgames.domain.member.vo.GameCardTotalPrice
 import com.splab.springgames.domain.member.vo.Name
 import com.splab.springgames.domain.member.vo.RegisteredDate
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 object MemberFixtureFactory {
 
     fun create(
         name: String = "홍길동",
         email: String = "test@test.com",
-        registeredDate: LocalDateTime = LocalDateTime.now(),
-        level: Level = Level.BROZNE,
+        registeredDate: LocalDate = LocalDate.now(),
+        level: Level = Level.BRONZE,
         gameCardTotalCount: GameCardTotalCount = GameCardTotalCount(0),
         gameCardTotalPrice: GameCardTotalPrice = GameCardTotalPrice(0.toBigDecimal()),
     ): Member {

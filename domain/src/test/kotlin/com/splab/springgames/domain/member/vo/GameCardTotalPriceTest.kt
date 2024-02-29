@@ -18,7 +18,7 @@ class GameCardTotalPriceTest : DescribeSpec({
                 val gameCardTotalPrice = GameCardTotalPrice(value.toBigDecimal())
 
                 // assert
-                gameCardTotalPrice.value shouldBe value
+                gameCardTotalPrice.value shouldBe value.toBigDecimal()
             }
         }
 

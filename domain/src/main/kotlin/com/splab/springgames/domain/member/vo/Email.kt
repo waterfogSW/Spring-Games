@@ -18,7 +18,7 @@ value class Email(val value: String) {
         fun create(value: String): Email {
             if (!value.matches(VALIDATION_REGEX.toRegex())) {
                 throw CustomException(
-                    type = MemberExceptionType.ENROLLMENT_INVALID_EMAIL_INPUT,
+                    type = MemberExceptionType.INVALID_EMAIL_INPUT,
                     message = VALIDATION_MESSAGE
                 )
             }
