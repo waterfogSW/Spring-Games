@@ -1,4 +1,4 @@
-package com.splab.springgames.application.member.common.config
+package com.splab.springgames.application.common.config
 
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
