@@ -122,4 +122,19 @@ class MemberJpaAdapterTest(
         }
     }
 
+    describe("deleteById") {
+        it("ID값에 해당하는 회원을 삭제한다") {
+            // arrange
+            val member: Member = MemberFixtureFactory.create()
+            sut.save(member)
+
+            // act
+            sut.deleteById(member.id)
+
+            // assert
+            val result: Member? = memberJpaRepository.findById(member.id).getOrNull()?.toDomain()
+            result shouldBe null
+        }
+    }
+
 })
