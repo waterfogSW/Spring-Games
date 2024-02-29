@@ -1,6 +1,5 @@
-package com.splab.springgames.infrastructure.persistence.member.adapter
+package com.splab.springgames.infrastructure.persistence
 
-import com.splab.springgames.infrastructure.persistence.PersistenceTestApplication
 import io.kotest.core.spec.style.DescribeSpec
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import

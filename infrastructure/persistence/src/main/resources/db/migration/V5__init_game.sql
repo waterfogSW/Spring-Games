@@ -6,10 +6,10 @@ create table game
 );
 
 insert game (id, name)
-values (unhex('018df3a8-7c53-78d3-a076-c5b3f5851080'), '매직더게더링');
+values (UUID_TO_BIN('018df3a8-7c53-78d3-a076-c5b3f5851080'), '매직더게더링');
 
 insert game (id, name)
-values (unhex('018df3a8-7c53-78d3-a076-c5b3f5851080'), '유희왕');
+values (UUID_TO_BIN('018df3a8-7c53-78d3-a076-c5b3f5851081'), '유희왕');
 
 insert game (id, name)
-values (unhex('018df3a8-7c53-78d3-a076-c5b3f5851080'), '포켓몬');
+values (UUID_TO_BIN('018df3a8-7c53-78d3-a076-c5b3f5851082'), '포켓몬');

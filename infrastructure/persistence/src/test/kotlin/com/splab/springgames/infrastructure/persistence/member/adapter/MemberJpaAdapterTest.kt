@@ -3,6 +3,7 @@ package com.splab.springgames.infrastructure.persistence.member.adapter
 import com.splab.springgames.domain.member.MemberFixtureFactory
 import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.domain.member.enum.Level
+import com.splab.springgames.infrastructure.persistence.PersistenceTestDescribeSpec
 import com.splab.springgames.infrastructure.persistence.member.repository.MemberJpaRepository
 import com.splab.springgames.support.common.exception.CustomException
 import com.splab.springgames.support.common.uuid.UuidGenerator
