@@ -52,5 +52,9 @@ class MemberJpaAdapter(
             ?.toDomain()
     }
 
+    override fun deleteById(id: UUID) {
+        memberJpaRepository.deleteById(id)
+    }
+
 
 }

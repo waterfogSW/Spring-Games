@@ -18,4 +18,6 @@ interface MemberRepository {
 
     fun findByEmail(email: Email): Member?
 
+    fun deleteById(id: UUID)
+
 }

@@ -40,6 +40,10 @@ class MemberRepositorySpy : MemberRepository {
         return bucket.values.find { it.email == email }
     }
 
+    override fun deleteById(id: UUID) {
+        bucket.remove(id)
+    }
+
     fun clear() {
         bucket.clear()
     }
