@@ -137,4 +137,30 @@ class MemberJpaAdapterTest(
         }
     }
 
+    describe("existsById") {
+        context("ID값에 해당하는 회원이 존재하는 경우") {
+            it("true를 반환한다") {
+                // arrange
+                val member: Member = MemberFixtureFactory.create()
+                sut.save(member)
+
+                // act
+                val result: Boolean = sut.existsById(member.id)
+
+                // assert
+                result shouldBe true
+            }
+        }
+
+        context("ID값에 해당하는 회원이 존재하지 않는 경우") {
+            it("false를 반환한다") {
+                // act
+                val result: Boolean = sut.existsById(UuidGenerator.create())
+
+                // assert
+                result shouldBe false
+            }
+        }
+    }
+
 })

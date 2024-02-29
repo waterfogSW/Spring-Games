@@ -34,6 +34,10 @@ class MemberJpaAdapter(
             .map { it.toDomain() }
     }
 
+    override fun existsById(id: UUID): Boolean {
+        return memberJpaRepository.existsById(id)
+    }
+
     override fun getById(id: UUID): Member {
         return memberJpaRepository
             .findById(id)
@@ -55,6 +59,5 @@ class MemberJpaAdapter(
     override fun deleteById(id: UUID) {
         memberJpaRepository.deleteById(id)
     }
-
 
 }

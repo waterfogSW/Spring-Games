@@ -14,6 +14,8 @@ interface MemberRepository {
         level: Level? = null,
     ): List<Member>
 
+    fun existsById(id: UUID): Boolean
+
     fun getById(id: UUID): Member
 
     fun findByEmail(email: Email): Member?

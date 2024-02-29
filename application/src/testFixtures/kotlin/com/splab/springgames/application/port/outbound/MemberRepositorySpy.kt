@@ -32,6 +32,10 @@ class MemberRepositorySpy : MemberRepository {
         return bucket.values.filter { nameFilter(it.name.value) && levelFilter(it.level) }
     }
 
+    override fun existsById(id: UUID): Boolean {
+        return bucket.containsKey(id)
+    }
+
     override fun getById(id: UUID): Member {
         return bucket[id] ?: throw NoSuchElementException()
     }
