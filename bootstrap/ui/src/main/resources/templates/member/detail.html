@@ -11,7 +11,7 @@
 <body>
 <div class="container my-4">
   <div class="mb-3">
-    <button onclick="history.back()" class="btn btn-outline-secondary">돌아가기</button>
+    <button onclick="location.href='/members'" class="btn btn-outline-secondary">돌아가기</button>
     <a th:href="@{/members/{id}/edit(id=${member.id})}" class="btn btn-outline-secondary">수정</a>
     <button id="deleteBtn" class="btn btn-danger">삭제</button>
   </div>
@@ -51,9 +51,34 @@
     </table>
   </div>
   <div>
-    <h2>소유 게임 카드</h2>
+    <h3>소유 게임 카드</h3>
     <div class="mb-3">
-      <a th:href="@{/members/{id}/game-cards/add(id=${member.id})}" class="btn btn-outline-secondary">게임 카드 추가</a>
+      <a th:href="@{/members/{id}/game-cards/add(id=${member.id})}"
+         class="btn btn-outline-secondary">게임 카드 추가</a>
+    </div>
+    <div>
+      <table class="table">
+        <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>게임 종류</th>
+          <th>타이틀</th>
+          <th>일련 번호</th>
+          <th>가격</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="gameCard : ${gameCardInfos}">
+          <td th:text="${gameCard.id}"></td>
+          <td th:text="${gameCard.gameName}"></td>
+          <td th:text="${gameCard.title}"></td>
+          <td th:text="${gameCard.serialNumber}"></td>
+          <td th:text="${gameCard.price}"></td>
+          <td>
+            <button class="btn btn-danger">삭제</button>
+          </td>
+      </table>
     </div>
   </div>
 </div>
