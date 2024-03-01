@@ -1,5 +1,6 @@
 package com.splab.springgames.domain.member.domain
 
+import com.splab.springgames.domain.member.GameCardFixtureFactory
 import com.splab.springgames.domain.member.MemberFixtureFactory
 import com.splab.springgames.domain.member.enum.Level
 import com.splab.springgames.domain.member.vo.Email
@@ -51,6 +52,23 @@ class MemberTest : DescribeSpec({
                 updatedMember.name shouldBe Name(updateName)
                 updatedMember.email shouldBe Email(updateEmail)
                 updatedMember.registeredDate shouldBe RegisteredDate(updateRegisteredDate)
+            }
+        }
+    }
+
+    describe("회원 카드 추가") {
+        context("성공 - 요청 값이 유효하면") {
+            it("회원이 가지고 있는 총 카드 개수와 가격을 업데이트 한다.") {
+                // arrange
+                val member: Member = MemberFixtureFactory.create()
+                val gameCard: GameCard = GameCardFixtureFactory.create()
+
+                // act
+                val updatedMember: Member = member.addGameCard(gameCard)
+
+                // assert
+                updatedMember.gameCardTotalCount.value shouldBe 1
+                updatedMember.gameCardTotalPrice.value shouldBe gameCard.price.value
             }
         }
     }

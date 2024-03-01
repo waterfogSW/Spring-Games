@@ -21,6 +21,13 @@ data class Member(
     val gameCardTotalPrice: GameCardTotalPrice,
 ) {
 
+    fun addGameCard(gameCard: GameCard): Member {
+        return this.copy(
+            gameCardTotalCount = GameCardTotalCount(this.gameCardTotalCount.value + 1),
+            gameCardTotalPrice = GameCardTotalPrice(this.gameCardTotalPrice.value + gameCard.price.value)
+        )
+    }
+
     fun update(
         name: String,
         email: String,
