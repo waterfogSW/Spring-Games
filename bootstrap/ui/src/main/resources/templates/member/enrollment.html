@@ -73,8 +73,15 @@
         case 'MEMBER-003':
           handleErrorMessage('nameError', data.message);
           break;
+        case 'COMMON-001':
+          alert(data.message);
+          break;
+        case 'COMMON-002':
+          alert(data.message)
+          break;
         default:
-          console.error('An unhandled error occurred:', data);
+          alert('알 수 없는 오류가 발생했습니다.');
+          break;
       }
     }
   });

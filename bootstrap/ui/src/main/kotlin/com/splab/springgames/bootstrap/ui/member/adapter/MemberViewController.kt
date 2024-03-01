@@ -1,5 +1,6 @@
 package com.splab.springgames.bootstrap.ui.member.adapter
 
+import com.splab.springgames.application.game.port.inbound.QueryGameUseCase
 import com.splab.springgames.application.member.port.inbound.QueryMemberUseCase
 import com.splab.springgames.domain.member.enum.Level
 import org.springframework.stereotype.Controller
@@ -14,6 +15,7 @@ import java.util.*
 @RequestMapping("/members")
 class MemberViewController(
     private val queryMemberUseCase: QueryMemberUseCase,
+    private val queryGameUseCase: QueryGameUseCase,
 ) {
 
     @GetMapping
@@ -41,7 +43,7 @@ class MemberViewController(
     ): String {
         queryMemberUseCase
             .getById(id)
-            .let { model.addAttribute("member", it) }
+            .also { model.addAttribute("member", it) }
         return "member/detail"
     }
 
@@ -58,8 +60,20 @@ class MemberViewController(
     ): String {
         queryMemberUseCase
             .getById(id)
-            .let { model.addAttribute("member", it) }
+            .also { model.addAttribute("member", it) }
         return "member/edit"
+    }
+
+    @GetMapping("/{id}/game-cards/add")
+    fun getGameCardAddForm(
+        model: Model,
+        @PathVariable
+        id: UUID,
+    ): String {
+        queryGameUseCase
+            .findAll()
+            .also { model.addAttribute("games", it) }
+        return "member/game-card-add"
     }
 
 }

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>회원 게임 카드 추가</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container my-4">
+  <button onclick="location.href = '/members/' + memberId" class="btn btn-outline-secondary">
+    돌아가기
+  </button>
+</div>
+<div class="container">
+  <h2>게임 카드 등록</h2>
+  <form id="addGameCardForm">
+    <div class="form-group">
+      <label for="game">게임 선택</label>
+      <select class="form-control" id="game" name="game" required>
+        <option th:each="game : ${games}" th:value="${game.id}" th:text="${game.name}"></option>
+      </select>
+      <div class="error" id="gameError"></div>
+    </div>
+    <div class="form-group">
+      <label for="title">타이틀</label>
+      <input type="text" class="form-control" id="title" name="title" placeholder="타이틀을 입력하세요"
+             required>
+      <div class="error" id="titleError"></div>
+    </div>
+    <div class="form-group">
+      <label for="serialNumber">일련 번호</label>
+      <input type="number" class="form-control" id="serialNumber" name="serialNumber" placeholder="일련 번호를 입력하세요"
+             required>
+      <div class="error" id="serialNumberError"></div>
+    </div>
+    <div class="form-group">
+      <label for="price">가격</label>
+      <input type="number" class="form-control" id="price" name="price" placeholder="가격을 입력하세요"
+             required>
+      <div class="error" id="priceError"></div>
+    </div>
+    <button type="button" id="submitBtn" class="btn btn-primary">등록</button>
+    <button type="button" class="btn btn-secondary" onclick="location.href='/members'">취소</button>
+  </form>
+</div>
+</body>
+<script>
+  const memberId = window.location.pathname.split('/')[2];
+  const getElement = id => document.getElementById(id);
+  const handleErrorMessage = (elementId, message) => getElement(elementId).innerText = message;
+  const addGameCard = async data => {
+    return await fetch(`/api/members/${memberId}/game-cards`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data),
+    });
+  };
+
+  getElement('submitBtn').addEventListener('click', async function (e) {
+    e.preventDefault();
+    ['gameError', 'titleError', 'serialNumberError', 'priceError'].forEach(id => handleErrorMessage(id, ''));
+
+    const formData = {
+      gameId: getElement('game').value || '',
+      title: getElement('title').value || '',
+      serialNumber: getElement('serialNumber').value || '',
+      price: getElement('price').value || '',
+    };
+
+    const response = await addGameCard(formData);
+
+    if (response.status === 201) {
+      alert('등록되었습니다.');
+      location.href = `/members/${memberId}`;
+    } else {
+      const data = await response.json();
+      switch (data.code) {
+        case 'GAME-CARD-001':
+          handleErrorMessage('titleError', data.message);
+          break;
+        case 'GAME-CARD-002':
+          handleErrorMessage('serialNumberError', data.message);
+          break;
+        case 'GAME-CARD-003':
+          handleErrorMessage('priceError', data.message);
+          break;
+        case 'GAME-CARD-004':
+          handleErrorMessage('gameError', data.message);
+          break;
+        case 'COMMON-001':
+          alert(data.message);
+          break;
+        case 'COMMON-002':
+          alert(data.message)
+          break;
+        default:
+          alert('알 수 없는 오류가 발생했습니다.');
+          break;
+      }
+    }
+  });
+</script>
+<style>
+  .error {
+    color: red;
+  }
+</style>
+</html>
