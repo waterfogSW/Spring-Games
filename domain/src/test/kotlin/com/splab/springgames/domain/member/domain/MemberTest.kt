@@ -90,7 +90,7 @@ class MemberTest : DescribeSpec({
                 )
 
                 // act
-                val updatedMember: Member = member.updateLevel(gameCards)
+                val updatedMember: Member = member.updateLevelWith(gameCards)
 
                 // assert
                 updatedMember.level shouldBe Level.GOLD
@@ -110,7 +110,7 @@ class MemberTest : DescribeSpec({
                 )
 
                 // act
-                val updatedMember: Member = member.updateLevel(gameCards)
+                val updatedMember: Member = member.updateLevelWith(gameCards)
 
                 // assert
                 updatedMember.level shouldBe Level.GOLD
@@ -126,7 +126,7 @@ class MemberTest : DescribeSpec({
                 )
 
                 // act
-                val updatedMember: Member = member.updateLevel(gameCards)
+                val updatedMember: Member = member.updateLevelWith(gameCards)
 
                 // assert
                 updatedMember.level shouldBe Level.SILVER
@@ -140,7 +140,7 @@ class MemberTest : DescribeSpec({
                 val gameCards: List<GameCard> = emptyList()
 
                 // act
-                val updatedMember: Member = member.updateLevel(gameCards)
+                val updatedMember: Member = member.updateLevelWith(gameCards)
 
                 // assert
                 updatedMember.level shouldBe Level.BRONZE

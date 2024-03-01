@@ -41,7 +41,7 @@ data class Member(
         )
     }
 
-    fun updateLevel(memberGameCards: List<GameCard>): Member {
+    fun updateLevelWith(memberGameCards: List<GameCard>): Member {
         val validGameCards = memberGameCards.filter { it.isValidCard() }
         return this.copy(level = determineMemberLevel(validGameCards))
     }
@@ -49,7 +49,7 @@ data class Member(
     private fun determineMemberLevel(validGameCards: List<GameCard>): Level {
         return when {
             meetsGoldLevelConditions(validGameCards) -> Level.GOLD
-            meetSilverLevelConditions(validGameCards) -> Level.SILVER
+            meetsSilverLevelConditions(validGameCards) -> Level.SILVER
             else -> Level.BRONZE
         }
     }
@@ -61,10 +61,10 @@ data class Member(
         val condition1 = validGameCards.size >= 4
         val condition2 = (totalValidPrice >= BigDecimal(100) && validGameCards.size in 2..3)
         val condition3 = distinctGamesCount >= 2
-        return (condition1 || condition2) && condition3
+        return (condition1 or condition2) and condition3
     }
 
-    private fun meetSilverLevelConditions(validGameCards: List<GameCard>): Boolean {
+    private fun meetsSilverLevelConditions(validGameCards: List<GameCard>): Boolean {
         return validGameCards.isNotEmpty()
     }
 
