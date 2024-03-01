@@ -1,15 +1,15 @@
 package com.splab.springgames.application.game.service
 
-import com.splab.springgames.application.game.port.inbound.GameQueryUseCase
+import com.splab.springgames.application.game.port.inbound.QueryGameUseCase
 import com.splab.springgames.application.game.port.outbound.GameRepository
 import com.splab.springgames.domain.game.domain.Game
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class GameQueryService(
+class QueryGameService(
     private val gameRepository: GameRepository,
-): GameQueryUseCase {
+): QueryGameUseCase {
 
     @Transactional(readOnly = true)
     override fun findAll(): List<Game> {

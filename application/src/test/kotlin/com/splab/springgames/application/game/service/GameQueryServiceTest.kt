@@ -11,7 +11,7 @@ import io.kotest.matchers.shouldBe
 class GameQueryServiceTest : DescribeSpec({
 
     val gameRepositorySpy = GameRepositorySpy()
-    val sut = GameQueryService(gameRepositorySpy)
+    val sut = QueryGameService(gameRepositorySpy)
 
     describe("목록 조회") {
         it("저장된 게임 목록을 조회한다") {
