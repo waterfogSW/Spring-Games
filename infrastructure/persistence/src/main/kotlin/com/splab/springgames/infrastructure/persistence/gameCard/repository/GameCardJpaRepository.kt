@@ -4,4 +4,8 @@ import com.splab.springgames.infrastructure.persistence.gameCard.entity.GameCard
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
-interface GameCardJpaRepository : JpaRepository<GameCardJpaEntity, UUID>
+interface GameCardJpaRepository : JpaRepository<GameCardJpaEntity, UUID> {
+
+    fun findAllByMemberId(memberId: UUID): List<GameCardJpaEntity>
+
+}

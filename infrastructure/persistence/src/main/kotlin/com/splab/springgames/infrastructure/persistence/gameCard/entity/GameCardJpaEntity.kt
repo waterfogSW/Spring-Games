@@ -1,6 +1,9 @@
 package com.splab.springgames.infrastructure.persistence.gameCard.entity
 
 import com.splab.springgames.domain.gameCard.domain.GameCard
+import com.splab.springgames.domain.gameCard.vo.GameCardPrice
+import com.splab.springgames.domain.gameCard.vo.GameCardSerialNumber
+import com.splab.springgames.domain.gameCard.vo.GameCardTitle
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -43,6 +46,17 @@ class GameCardJpaEntity(
     @Column(nullable = false, updatable = false)
     var price: BigDecimal = price
         private set
+
+    fun toDomain(): GameCard {
+        return GameCard(
+            id = id,
+            memberId = memberId,
+            gameId = gameId,
+            title = GameCardTitle(title),
+            serialNumber = GameCardSerialNumber(serialNumber),
+            price = GameCardPrice(price),
+        )
+    }
 
     companion object {
 
