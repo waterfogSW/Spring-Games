@@ -16,6 +16,10 @@ data class GameCard(
     val price: GameCardPrice,
 ) {
 
+    fun isValidCard(): Boolean {
+        return price.value != BigDecimal.ZERO
+    }
+
     companion object {
         fun create(
             gameId: UUID,

@@ -37,4 +37,54 @@ class GameCardTest : DescribeSpec({
         }
     }
 
+    describe("isValid") {
+        context("게임 카드의 가격이 0이면") {
+            it("false 를 반환한다") {
+                // arrange
+                val gameId = UuidGenerator.create()
+                val memberId = UuidGenerator.create()
+                val title = "게임 카드 제목"
+                val serialNumber = 1L
+                val price = 0.toBigDecimal()
+                val gameCard = GameCard.create(
+                    gameId = gameId,
+                    userId = memberId,
+                    title = title,
+                    serialNumber = serialNumber,
+                    price = price,
+                )
+
+                // act
+                val result = gameCard.isValidCard()
+
+                // assert
+                result shouldBe false
+            }
+        }
+
+        context("게임 카드의 가격이 0이 아니면") {
+            it("true 를 반환한다") {
+                // arrange
+                val gameId = UuidGenerator.create()
+                val memberId = UuidGenerator.create()
+                val title = "게임 카드 제목"
+                val serialNumber = 1L
+                val price = 1000.toBigDecimal()
+                val gameCard = GameCard.create(
+                    gameId = gameId,
+                    userId = memberId,
+                    title = title,
+                    serialNumber = serialNumber,
+                    price = price,
+                )
+
+                // act
+                val result = gameCard.isValidCard()
+
+                // assert
+                result shouldBe true
+            }
+        }
+    }
+
 })
