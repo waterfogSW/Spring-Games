@@ -12,6 +12,10 @@ class GameRepositorySpy: GameRepository {
         return bucket.values.toList()
     }
 
+    override fun getById(id: UUID): Game {
+        return bucket[id] ?: throw NoSuchElementException()
+    }
+
     fun save(game: Game) {
         bucket[game.id] = game
     }
