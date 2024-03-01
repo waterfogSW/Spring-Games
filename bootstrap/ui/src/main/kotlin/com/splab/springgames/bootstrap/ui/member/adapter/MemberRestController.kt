@@ -1,8 +1,10 @@
 package com.splab.springgames.bootstrap.ui.member.adapter
 
+import com.splab.springgames.application.member.port.inbound.AddGameCardUseCase
 import com.splab.springgames.application.member.port.inbound.DeleteMemberUseCase
 import com.splab.springgames.application.member.port.inbound.EditMemberUseCase
 import com.splab.springgames.application.member.port.inbound.EnrollMemberUseCase
+import com.splab.springgames.bootstrap.ui.member.dto.AddGameCardRequest
 import com.splab.springgames.bootstrap.ui.member.dto.EditMemberRequest
 import com.splab.springgames.bootstrap.ui.member.dto.EnrollMemberRequest
 import org.springframework.http.HttpStatus
@@ -22,6 +24,7 @@ class MemberRestController(
     private val enrollMemberUseCase: EnrollMemberUseCase,
     private val editMemberUseCase: EditMemberUseCase,
     private val deleteMemberUseCase: DeleteMemberUseCase,
+    private val addGameCardUseCase: AddGameCardUseCase,
 ) {
 
     @PostMapping
@@ -55,6 +58,19 @@ class MemberRestController(
         memberId: UUID
     ) {
         deleteMemberUseCase.invoke(memberId)
+    }
+
+    @PostMapping("/{memberId}/game-cards")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun addGameCard(
+        @PathVariable
+        memberId: UUID,
+        @RequestBody
+        request: AddGameCardRequest,
+    ) {
+        request
+            .toCommandWith(memberId)
+            .also { addGameCardUseCase.invoke(it) }
     }
 
 }

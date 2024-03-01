@@ -1,7 +1,7 @@
 package com.splab.springgames.bootstrap.ui.member.adapter
 
 import com.splab.springgames.application.game.port.inbound.QueryGameUseCase
-import com.splab.springgames.application.gameCard.port.inbound.QueryGameCardUseCase
+import com.splab.springgames.application.member.port.inbound.QueryGameCardUseCase
 import com.splab.springgames.application.member.port.inbound.QueryMemberUseCase
 import com.splab.springgames.domain.member.enum.Level
 import org.springframework.stereotype.Controller
