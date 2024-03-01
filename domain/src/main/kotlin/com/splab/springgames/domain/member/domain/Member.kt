@@ -7,6 +7,7 @@ import com.splab.springgames.domain.member.vo.GameCardTotalPrice
 import com.splab.springgames.domain.member.vo.Name
 import com.splab.springgames.domain.member.vo.RegisteredDate
 import com.splab.springgames.support.common.uuid.UuidGenerator
+import java.math.BigDecimal
 import java.time.LocalDate
 import java.util.*
 
@@ -38,6 +39,33 @@ data class Member(
             email = Email.create(email),
             registeredDate = RegisteredDate.create(registeredDate)
         )
+    }
+
+    fun updateLevel(memberGameCards: List<GameCard>): Member {
+        val validGameCards = memberGameCards.filter { it.isValidCard() }
+        return this.copy(level = determineMemberLevel(validGameCards))
+    }
+
+    private fun determineMemberLevel(validGameCards: List<GameCard>): Level {
+        return when {
+            meetsGoldLevelConditions(validGameCards) -> Level.GOLD
+            meetSilverLevelConditions(validGameCards) -> Level.SILVER
+            else -> Level.BRONZE
+        }
+    }
+
+    private fun meetsGoldLevelConditions(validGameCards: List<GameCard>): Boolean {
+        val distinctGamesCount = validGameCards.map { it.gameId }.distinct().count()
+        val totalValidPrice = validGameCards.sumOf { it.price.value }
+
+        val condition1 = validGameCards.size >= 4
+        val condition2 = (totalValidPrice >= BigDecimal(100) && validGameCards.size in 2..3)
+        val condition3 = distinctGamesCount >= 2
+        return (condition1 || condition2) && condition3
+    }
+
+    private fun meetSilverLevelConditions(validGameCards: List<GameCard>): Boolean {
+        return validGameCards.isNotEmpty()
     }
 
     companion object {
