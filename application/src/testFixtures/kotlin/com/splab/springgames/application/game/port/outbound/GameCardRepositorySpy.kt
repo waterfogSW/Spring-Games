@@ -26,4 +26,8 @@ class GameCardRepositorySpy : GameCardRepository {
         }
     }
 
+    fun clear() {
+        bucket.clear()
+    }
+
 }
