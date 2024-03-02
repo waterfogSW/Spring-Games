@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>회원 조회</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -76,7 +76,7 @@
           <td th:text="${gameCard.serialNumber}"></td>
           <td th:text="${gameCard.price}"></td>
           <td>
-            <button class="btn btn-danger">삭제</button>
+            <button class="btn btn-danger deleteGameCardBtn" th:data-id="${gameCard.id}">삭제</button>
           </td>
       </table>
     </div>
@@ -103,5 +103,33 @@
       method: 'DELETE',
     });
   };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.deleteGameCardBtn').forEach(button => {
+      button.addEventListener('click', function() {
+        const gameCardId = this.getAttribute('data-id');
+        if (confirm('이 게임 카드를 정말 삭제하시겠습니까?')) {
+          deleteGameCard(gameCardId);
+        }
+      });
+    });
+
+    async function deleteGameCard(gameCardId) {
+      try {
+        const response = await fetch(`/api/members/${memberId}/game-cards/${gameCardId}`, {
+          method: 'DELETE',
+        });
+        if (response.ok) {
+          alert('게임 카드가 성공적으로 삭제되었습니다.');
+          location.reload();
+        } else {
+          alert('게임 카드 삭제에 실패했습니다.');
+        }
+      } catch (error) {
+        console.error('게임 카드 삭제 중 오류 발생:', error);
+        alert('게임 카드 삭제 과정에서 오류가 발생했습니다.');
+      }
+    }
+  });
 </script>
 </html>
