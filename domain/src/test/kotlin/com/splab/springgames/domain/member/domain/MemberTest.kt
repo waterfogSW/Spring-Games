@@ -4,6 +4,8 @@ import com.splab.springgames.domain.member.GameCardFixtureFactory
 import com.splab.springgames.domain.member.MemberFixtureFactory
 import com.splab.springgames.domain.member.enum.Level
 import com.splab.springgames.domain.member.vo.Email
+import com.splab.springgames.domain.member.vo.GameCardTotalCount
+import com.splab.springgames.domain.member.vo.GameCardTotalPrice
 import com.splab.springgames.domain.member.vo.Name
 import com.splab.springgames.domain.member.vo.RegisteredDate
 import com.splab.springgames.support.common.uuid.UuidGenerator
@@ -71,6 +73,32 @@ class MemberTest : DescribeSpec({
                 // assert
                 updatedMember.gameCardTotalCount.value shouldBe 1
                 updatedMember.gameCardTotalPrice.value shouldBe gameCard.price.value
+            }
+        }
+    }
+
+    describe("회원 카드 삭제") {
+        context("성공 - 요청 값이 유효하면") {
+            it("회원이 가지고 있는 총 카드 개수와 가격을 업데이트 한다.") {
+                // arrange
+                val existsGameCardTotalCount = GameCardTotalCount(3)
+                val existsGameCardTotalPrice = GameCardTotalPrice(30.toBigDecimal())
+                val member: Member = MemberFixtureFactory.create(
+                    gameCardTotalCount = existsGameCardTotalCount,
+                    gameCardTotalPrice = existsGameCardTotalPrice
+                )
+
+                val deleteGameCardPrice = 10.toBigDecimal()
+                val gameCard: GameCard = GameCardFixtureFactory.create(
+                    price = deleteGameCardPrice
+                )
+
+                // act
+                val updated: Member = member.deleteGameCard(gameCard)
+
+                // assert
+                updated.gameCardTotalCount.value shouldBe existsGameCardTotalCount.value - 1
+                updated.gameCardTotalPrice.value shouldBe existsGameCardTotalPrice.value - deleteGameCardPrice
             }
         }
     }
