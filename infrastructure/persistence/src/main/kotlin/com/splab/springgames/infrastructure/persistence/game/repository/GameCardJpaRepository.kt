@@ -8,4 +8,6 @@ interface GameCardJpaRepository : JpaRepository<GameCardJpaEntity, UUID> {
 
     fun findAllByMemberId(memberId: UUID): List<GameCardJpaEntity>
 
+    fun existsByGameIdAndSerialNumber(gameId: UUID, serialNumber: Long): Boolean
+
 }

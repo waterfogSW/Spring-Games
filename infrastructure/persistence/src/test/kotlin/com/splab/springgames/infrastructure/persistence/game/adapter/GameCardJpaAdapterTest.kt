@@ -49,4 +49,18 @@ class GameCardJpaAdapterTest(
         }
     }
 
+    describe("existsByGameIdAndSerialNumber") {
+        it("게임 아이디와 시리얼 번호로 게임 카드가 존재하는지 확인한다.") {
+            // arrange
+            val gameCard = GameCardFixtureFactory.create()
+            gameCardJpaRepository.save(gameCard.toJpaEntity())
+
+            // act
+            val result = sut.existsByGameIdAndSerialNumber(gameCard.gameId, gameCard.serialNumber)
+
+            // assert
+            result shouldNotBe false
+        }
+    }
+
 })
