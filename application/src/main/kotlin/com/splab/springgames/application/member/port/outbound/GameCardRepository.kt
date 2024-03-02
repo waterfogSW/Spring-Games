@@ -10,6 +10,8 @@ interface GameCardRepository {
 
     fun deleteById(gameCardId: UUID)
 
+    fun deleteAllByMemberId(memberId: UUID)
+
     fun findAllByMemberId(memberId: UUID): List<GameCard>
 
     fun existsByGameIdAndSerialNumber(

@@ -6,6 +6,7 @@ import com.splab.springgames.domain.member.vo.GameCardSerialNumber
 import com.splab.springgames.infrastructure.persistence.game.entity.GameCardJpaEntity.Companion.toJpaEntity
 import com.splab.springgames.infrastructure.persistence.game.repository.GameCardJpaRepository
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -22,6 +23,11 @@ class GameCardJpaAdapter(
 
     override fun deleteById(gameCardId: UUID) {
         gameCardJpaRepository.deleteById(gameCardId)
+    }
+
+    @Transactional
+    override fun deleteAllByMemberId(memberId: UUID) {
+        gameCardJpaRepository.deleteAllByMemberId(memberId)
     }
 
     override fun findAllByMemberId(memberId: UUID): List<GameCard> {

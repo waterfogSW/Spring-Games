@@ -117,4 +117,22 @@ class GameCardJpaAdapterTest(
         }
     }
 
+    describe("deleteAllByMemberId") {
+        it("회원의 모든 게임 카드를 삭제한다.") {
+            // arrange
+            val memberId = UuidGenerator.create()
+            val gameCard1 = GameCardFixtureFactory.create(memberId = memberId)
+            val gameCard2 = GameCardFixtureFactory.create(memberId = memberId)
+
+            gameCardJpaRepository.save(gameCard1.toJpaEntity())
+            gameCardJpaRepository.save(gameCard2.toJpaEntity())
+
+            // act
+            sut.deleteAllByMemberId(memberId)
+
+            // assert
+            gameCardJpaRepository.findAll() shouldBe emptyList()
+        }
+    }
+
 })
