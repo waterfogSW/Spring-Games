@@ -14,6 +14,10 @@ class GameCardRepositorySpy : GameCardRepository {
         bucket[gameCard.id] = gameCard
     }
 
+    override fun deleteById(gameCardId: UUID) {
+        bucket.remove(gameCardId)
+    }
+
     override fun findAllByMemberId(memberId: UUID): List<GameCard> {
         return bucket.values.filter { it.memberId == memberId }
     }
@@ -25,6 +29,10 @@ class GameCardRepositorySpy : GameCardRepository {
         return bucket.values.any {
             it.gameId == gameId && it.serialNumber == serialNumber
         }
+    }
+
+    override fun findById(gameCardId: UUID): GameCard? {
+        return bucket[gameCardId]
     }
 
     fun findByGameIdAndSerialNumber(

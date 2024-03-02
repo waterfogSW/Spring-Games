@@ -8,11 +8,15 @@ interface GameCardRepository {
 
     fun save(gameCard: GameCard)
 
+    fun deleteById(gameCardId: UUID)
+
     fun findAllByMemberId(memberId: UUID): List<GameCard>
 
     fun existsByGameIdAndSerialNumber(
         gameId: UUID,
         serialNumber: GameCardSerialNumber
     ): Boolean
+
+    fun findById(gameCardId: UUID): GameCard?
 
 }

@@ -6,7 +6,9 @@ import com.splab.springgames.infrastructure.persistence.game.entity.GameCardJpaE
 import com.splab.springgames.infrastructure.persistence.game.repository.GameCardJpaRepository
 import com.splab.springgames.support.common.uuid.UuidGenerator
 import io.kotest.core.annotation.DisplayName
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 @DisplayName("GameCardJpaAdapter")
@@ -60,6 +62,58 @@ class GameCardJpaAdapterTest(
 
             // assert
             result shouldNotBe false
+        }
+    }
+
+    describe("findById") {
+        context("id값에 해당하는 게임 카드가 존재하는 경우") {
+            it("게임 카드를 조회한다.") {
+                // arrange
+                val gameCard = GameCardFixtureFactory.create()
+                gameCardJpaRepository.save(gameCard.toJpaEntity())
+
+                // act
+                val result = sut.findById(gameCard.id)
+
+                // assert
+                result shouldNotBe null
+            }
+        }
+
+        context("id값에 해당하는 게임 카드가 존재하지 않는 경우") {
+            it("null을 반환한다.") {
+                // act
+                val result = sut.findById(UuidGenerator.create())
+
+                // assert
+                result shouldBe null
+            }
+        }
+    }
+
+    describe("deleteById") {
+        context("id값에 해당하는 게임 카드가 존재하는 경우") {
+            it("게임 카드를 삭제한다.") {
+                // arrange
+                val gameCard = GameCardFixtureFactory.create()
+                gameCardJpaRepository.save(gameCard.toJpaEntity())
+
+                // act
+                sut.deleteById(gameCard.id)
+
+                // assert
+                gameCardJpaRepository.findById(gameCard.id) shouldBe Optional.empty()
+            }
+        }
+
+        context("id값에 해당하는 게임 카드가 존재하지 않는 경우") {
+            it("아무런 동작을 하지 않는다.") {
+                // act
+                sut.deleteById(UuidGenerator.create())
+
+                // assert
+                gameCardJpaRepository.findAll() shouldBe emptyList()
+            }
         }
     }
 
