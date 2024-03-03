@@ -13,21 +13,23 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate
-import java.util.UUID
+import java.util.*
 
 @DisplayName("회원 도메인 테스트")
 class MemberTest : DescribeSpec({
 
     describe("회원 생성") {
         context("성공 - 요청 값이 유효하면") {
-            it("회원을 생성한다.") {
+            it("회원을 생성하고 알림메서드를 호출한다") {
                 // arrange
+                var isMemberCreated = false
                 val name = "홍길동"
                 val email = "test1234@test.com"
                 val registeredDate = LocalDate.now()
 
                 // act
-                val member: Member = Member.create(name, email, registeredDate)
+                val member: Member =
+                    Member.create(name, email, registeredDate) { isMemberCreated = true }
 
                 // assert
                 member.name shouldBe Name(name)
@@ -36,6 +38,7 @@ class MemberTest : DescribeSpec({
                 member.gameCardTotalCount.value shouldBe 0
                 member.gameCardTotalPrice.value shouldBe 0.toBigDecimal()
                 member.level shouldBe Level.BRONZE
+                isMemberCreated shouldBe true
             }
         }
     }
@@ -50,7 +53,8 @@ class MemberTest : DescribeSpec({
                 val updateRegisteredDate: LocalDate = LocalDate.now().minusDays(1)
 
                 // act
-                val updatedMember: Member = member.update(updateName, updateEmail, updateRegisteredDate)
+                val updatedMember: Member =
+                    member.update(updateName, updateEmail, updateRegisteredDate)
 
                 // assert
                 updatedMember.name shouldBe Name(updateName)
@@ -105,7 +109,7 @@ class MemberTest : DescribeSpec({
 
     describe("회원 레벨 업데이트") {
         context("회원의 유효 게임카드가 4장 이상이고, 2개 이상의 게임을 가지고 있으면") {
-            it("골드 레벨로 업데이트 한다.") {
+            it("골드 레벨로 업데이트 하고") {
                 // arrange
                 val member: Member = MemberFixtureFactory.create(level = Level.BRONZE)
                 val gameId1: UUID = UuidGenerator.create()
@@ -172,6 +176,45 @@ class MemberTest : DescribeSpec({
 
                 // assert
                 updatedMember.level shouldBe Level.BRONZE
+            }
+        }
+
+        context("회원의 레벨이 변경되면") {
+            it("회원 레벨 변경 알림 메서드를 호출한다.") {
+                // arrange
+                var isLevelChanged = false
+
+                val member: Member = MemberFixtureFactory.create(level = Level.BRONZE)
+                val gameId1: UUID = UuidGenerator.create()
+                val gameId2: UUID = UuidGenerator.create()
+                val gameCards: List<GameCard> = listOf(
+                    GameCardFixtureFactory.create(gameId = gameId1, price = 10.toBigDecimal()),
+                    GameCardFixtureFactory.create(gameId = gameId1, price = 10.toBigDecimal()),
+                    GameCardFixtureFactory.create(gameId = gameId2, price = 10.toBigDecimal()),
+                    GameCardFixtureFactory.create(gameId = gameId2, price = 10.toBigDecimal()),
+                )
+
+                // act
+                member.updateLevelWith(gameCards) { isLevelChanged = true }
+
+                // assert
+                isLevelChanged shouldBe true
+            }
+        }
+
+        context("회원의 레벨이 변경되지 않으면") {
+            it("회원 레벨 변경 알림 메서드를 호출하지 않는다.") {
+                // arrange
+                var isLevelChanged = false
+
+                val member: Member = MemberFixtureFactory.create(level = Level.BRONZE)
+                val gameCards: List<GameCard> = emptyList()
+
+                // act
+                member.updateLevelWith(gameCards) { isLevelChanged = true }
+
+                // assert
+                isLevelChanged shouldBe false
             }
         }
     }
