@@ -13,4 +13,7 @@ dependencies {
     implementation(project(":application"))
 
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+
+    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-stub-runner")
+    testImplementation(testFixtures(project(":domain")))
 }
