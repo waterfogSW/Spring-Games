@@ -11,7 +11,7 @@ import io.kotest.matchers.shouldNotBe
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
-@DisplayName("GameCardJpaAdapter")
+@DisplayName("[Persistence] 게임 카드 JPA 어댑터")
 class GameCardJpaAdapterTest(
     private val gameCardJpaRepository: GameCardJpaRepository,
     private val sut: GameCardJpaAdapter
@@ -21,7 +21,7 @@ class GameCardJpaAdapterTest(
         gameCardJpaRepository.deleteAll()
     }
 
-    describe("게임 카드 저장") {
+    describe("save") {
         it("게임 카드를 저장한다") {
             // arrange
             val gameCard = GameCardFixtureFactory.create()

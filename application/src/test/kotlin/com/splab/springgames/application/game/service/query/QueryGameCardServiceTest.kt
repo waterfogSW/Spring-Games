@@ -14,7 +14,7 @@ import io.mockk.every
 import io.mockk.mockk
 import java.util.*
 
-@DisplayName("게임 카드 조회 서비스 테스트")
+@DisplayName("[Application] 게임 카드 조회")
 class QueryGameCardServiceTest : DescribeSpec({
 
     val queryGameUseCase = mockk<QueryGameUseCase>()

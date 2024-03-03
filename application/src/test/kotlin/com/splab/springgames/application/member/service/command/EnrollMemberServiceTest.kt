@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import java.time.LocalDate
 
-@DisplayName("회원 등록 서비스 테스트")
+@DisplayName("[Application] 회원 등록 서비스")
 class EnrollMemberServiceTest : DescribeSpec({
 
     val memberRepositorySpy = MemberRepositorySpy()
@@ -25,8 +25,8 @@ class EnrollMemberServiceTest : DescribeSpec({
         memberEventNotifier.clear()
     }
 
-    describe("회원 등록 서비스") {
-        it("새로운 회원을 생성, 저장하고 알림을 보낸다.") {
+    describe("회원 등록") {
+        it("[성공] 새로운 회원을 생성, 저장하고 알림을 보낸다.") {
             // arrange
             val name = "홍길동"
             val email = "test@test.com"

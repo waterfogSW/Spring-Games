@@ -15,7 +15,7 @@ import io.kotest.matchers.shouldBe
 import java.time.LocalDate
 import java.util.*
 
-@DisplayName("회원 도메인 테스트")
+@DisplayName("[Domain] 회원 도메인")
 class MemberTest : DescribeSpec({
 
     describe("회원 생성") {

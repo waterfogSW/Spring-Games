@@ -2,9 +2,11 @@ package com.splab.springgames.domain.member.vo
 
 import com.splab.springgames.support.common.exception.CustomException
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
+@DisplayName("[Domain] 게임 카드 시리얼 번호")
 class GameCardSerialNumberTest : DescribeSpec({
 
     describe("create") {

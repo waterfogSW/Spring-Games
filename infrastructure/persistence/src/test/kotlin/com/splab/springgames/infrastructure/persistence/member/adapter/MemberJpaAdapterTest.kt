@@ -13,7 +13,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import kotlin.jvm.optionals.getOrNull
 
-@DisplayName("MemberJpaAdapter")
+@DisplayName("[Persistence] 회원 JPA 어댑터")
 class MemberJpaAdapterTest(
     private val sut: MemberJpaAdapter,
     private val memberJpaRepository: MemberJpaRepository,

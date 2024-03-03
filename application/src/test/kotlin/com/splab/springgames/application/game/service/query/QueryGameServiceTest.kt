@@ -8,14 +8,14 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-@DisplayName("게임 쿼리 서비스")
+@DisplayName("[Application] 게임 조회")
 class QueryGameServiceTest : DescribeSpec({
 
     val gameRepositorySpy = GameRepositorySpy()
     val sut = QueryGameService(gameRepositorySpy)
 
     describe("목록 조회") {
-        it("저장된 게임 목록을 조회한다") {
+        it("[성공] 저장된 게임 목록을 조회한다") {
             // arrange
             GameFixtureFactory
                 .create(name = "게임1")

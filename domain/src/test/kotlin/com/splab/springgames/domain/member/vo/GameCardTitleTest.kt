@@ -6,7 +6,7 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-@DisplayName("게임 카드 제목 테스트")
+@DisplayName("[Domain] 게임 카드 제목")
 class GameCardTitleTest : DescribeSpec({
 
     describe("create") {

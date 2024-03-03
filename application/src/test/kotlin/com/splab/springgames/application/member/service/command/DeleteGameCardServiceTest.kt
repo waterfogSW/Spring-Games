@@ -14,7 +14,7 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-@DisplayName("게임 카드 삭제 서비스 테스트")
+@DisplayName("[Application] 게임 카드 삭제")
 class DeleteGameCardServiceTest : DescribeSpec({
 
     val memberRepositorySpy = MemberRepositorySpy()
@@ -33,7 +33,7 @@ class DeleteGameCardServiceTest : DescribeSpec({
     }
 
     describe("게임 카드 삭제") {
-        context("ID값에 해당하는 게임 카드가 존재하는 경우") {
+        context("[성공] ID값에 해당하는 게임 카드가 존재하는 경우") {
             it("게임 카드를 삭제하고, 회원 정보를 업데이트 한다") {
                 // arrange
                 val existsGameCardCount = GameCardTotalCount(10)
@@ -69,7 +69,7 @@ class DeleteGameCardServiceTest : DescribeSpec({
             }
         }
 
-        context("게임 카드 삭제로 인해 레벨이 변경된 경우") {
+        context("[성공] 게임 카드 삭제로 인해 레벨이 변경된 경우") {
             it("레벨 변경 알림을 보낸다.") {
                 // arrange
                 val existsGameCardCount = GameCardTotalCount(1)
@@ -96,7 +96,7 @@ class DeleteGameCardServiceTest : DescribeSpec({
             }
         }
 
-        context("ID값에 해당하는 게임 카드가 존재하지 않는 경우") {
+        context("[성공] ID값에 해당하는 게임 카드가 존재하지 않는 경우") {
             it("아무런 동작을 하지 않는다") {
                 // act & assert
                 sut.invoke(GameCardFixtureFactory.create().id)

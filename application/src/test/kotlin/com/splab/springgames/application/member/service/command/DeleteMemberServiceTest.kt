@@ -9,7 +9,7 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-@DisplayName("회원 삭제 서비스")
+@DisplayName("[Application] 회원 삭제 서비스")
 class DeleteMemberServiceTest : DescribeSpec({
 
     val memberRepositorySpy = MemberRepositorySpy()
@@ -25,7 +25,7 @@ class DeleteMemberServiceTest : DescribeSpec({
     }
 
     describe("회원 삭제") {
-        context("ID값에 해당하는 회원이 존재하는 경우") {
+        context("[성공] ID값에 해당하는 회원이 존재하는 경우") {
             it("해당 ID값에 해당하는 회원과, 해당 회원의 게임 카드를 삭제한다") {
                 // arrange
                 val member: Member = MemberFixtureFactory.create()
@@ -45,7 +45,7 @@ class DeleteMemberServiceTest : DescribeSpec({
             }
         }
 
-        context("ID값에 해당하는 회원이 존재하지 않는 경우") {
+        context("[성공] ID값에 해당하는 회원이 존재하지 않는 경우") {
             it("아무것도 하지 않는다") {
                 // arrange
                 val memberId = MemberFixtureFactory.create().id

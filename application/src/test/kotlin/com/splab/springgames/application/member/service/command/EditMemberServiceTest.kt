@@ -12,7 +12,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate
 
-@DisplayName("회원 수정 서비스 테스트")
+@DisplayName("[Application] 회원 수정 서비스")
 class EditMemberServiceTest : DescribeSpec({
 
     val memberRepositorySpy = MemberRepositorySpy()
@@ -22,8 +22,8 @@ class EditMemberServiceTest : DescribeSpec({
         memberRepositorySpy.clear()
     }
 
-    describe("회원 수정 서비스") {
-        it("ID값에 해당하는 회원의 정보를 수정한다.") {
+    describe("회원 수정") {
+        it("[성공] ID값에 해당하는 회원의 정보를 수정한다.") {
             // arrange
             val existsMember: Member = MemberFixtureFactory.create()
             memberRepositorySpy.save(existsMember)

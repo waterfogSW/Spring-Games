@@ -7,13 +7,13 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.matchers.shouldBe
 import java.util.*
 
-@DisplayName("GameJpaAdapterTest")
+@DisplayName("[Persistence] 게임 JPA 어댑터")
 class GameJpaAdapterTest(
     private val sut: GameJpaAdapter,
     private val gameJpaRepository: GameJpaRepository,
 ) : PersistenceTestDescribeSpec({
 
-    describe("전체 게임 목록 조회") {
+    describe("findAll") {
         it("저장된 모든 게임 목록을 조회한다") {
             // arrange
             // arranged by V5__insert_game.sql

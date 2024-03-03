@@ -9,7 +9,7 @@ import net.bytebuddy.asm.Advice.Local
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-@DisplayName("가입일 테스트")
+@DisplayName("[Domain] 가입일")
 class RegisteredDateTest : DescribeSpec({
 
     describe("가입일 생성") {

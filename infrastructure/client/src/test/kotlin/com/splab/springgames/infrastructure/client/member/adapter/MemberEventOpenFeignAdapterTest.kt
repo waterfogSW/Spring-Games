@@ -10,8 +10,10 @@ import com.splab.springgames.domain.member.MemberFixtureFactory
 import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.infrastructure.client.ClientTestDescribeSpec
 import com.splab.springgames.infrastructure.client.common.properties.SlackConfigurationProperties
+import io.kotest.core.annotation.DisplayName
 import wiremock.org.eclipse.jetty.http.HttpStatus
 
+@DisplayName("[Client] 회원 이벤트 OpenFeign 어댑터")
 class MemberEventOpenFeignAdapterTest(
     private val sut: MemberEventOpenFeignAdapter,
     private val properties: SlackConfigurationProperties

@@ -5,7 +5,7 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-@DisplayName("이메일 테스트")
+@DisplayName("[Domain] 이메일")
 class EmailTest : DescribeSpec({
 
     describe("이메일 생성") {

@@ -5,7 +5,7 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-@DisplayName("게임 카드 총 가격 테스트")
+@DisplayName("[Domain] 게임 카드 총 가격")
 class GameCardTotalPriceTest : DescribeSpec({
 
     describe("게임 카드 총 가격 생성") {

@@ -20,7 +20,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import java.util.*
 
-@DisplayName("게임 카드 추가 서비스 테스트")
+@DisplayName("[Application] 게임 카드 추가")
 class AddGameCardServiceTest : DescribeSpec({
 
     val gameCardRepository = GameCardRepositorySpy()
@@ -39,7 +39,7 @@ class AddGameCardServiceTest : DescribeSpec({
     }
 
     describe("게임 카드 추가") {
-        context("성공 - 회원이 저장되어 있으면") {
+        context("[성공] 회원이 저장되어 있으면") {
             it("새로운 게임 카드를 저장하고 회원 정보를 업데이트 한다") {
                 // arrange
                 val member: Member = MemberFixtureFactory.create()
@@ -75,7 +75,7 @@ class AddGameCardServiceTest : DescribeSpec({
             }
         }
 
-        context("성공 - 카드 추가로 회원의 레벨이 변경되면") {
+        context("[성공] 카드 추가로 회원의 레벨이 변경되면") {
             it("회원 정보를 업데이트 한 후, 레벨 변경 이벤트를 발행한다") {
                 // arrange
                 val member: Member = MemberFixtureFactory.create()
@@ -99,7 +99,7 @@ class AddGameCardServiceTest : DescribeSpec({
             }
         }
 
-        context("실패 - 이미 해당 게임에 등록된 시리얼번호의 카드가 존재하면") {
+        context("[실패] 이미 해당 게임에 등록된 시리얼번호의 카드가 존재하면") {
             it("CustomException(code = GAME-CARD-002) 예외를 던진다") {
                 // arrange
                 val member: Member = MemberFixtureFactory.create()
