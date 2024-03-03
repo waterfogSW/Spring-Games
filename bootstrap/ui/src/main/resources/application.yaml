@@ -6,6 +6,7 @@ spring:
     active: local
     include:
       - persistence
+      - client
 ---
 spring:
   config:

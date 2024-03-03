@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val springCloudVersion by extra("2023.0.0")
+
 plugins {
     id("java-test-fixtures")
     id("org.springframework.boot") version Version.SPRING_BOOT
@@ -71,5 +73,11 @@ subprojects {
 
     tasks.withType<Test> {
         useJUnitPlatform()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+        }
     }
 }

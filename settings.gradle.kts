@@ -19,6 +19,9 @@ project(":application").projectDir = file("application")
 include(":infrastructure:persistence")
 project(":infrastructure:persistence").projectDir = file("infrastructure/persistence")
 
+include(":infrastructure:client")
+project(":infrastructure:client").projectDir = file("infrastructure/client")
+
 // bootstrap
 include(":bootstrap:ui")
 project(":bootstrap:ui").projectDir = file("bootstrap/ui")
