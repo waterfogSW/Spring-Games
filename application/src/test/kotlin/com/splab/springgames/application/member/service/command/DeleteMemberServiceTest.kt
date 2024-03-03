@@ -1,7 +1,6 @@
-package com.splab.springgames.application.member.service
+package com.splab.springgames.application.member.service.command
 
 import com.splab.springgames.application.game.port.outbound.GameCardRepositorySpy
-import com.splab.springgames.application.member.port.outbound.GameCardRepository
 import com.splab.springgames.application.member.port.outbound.MemberRepositorySpy
 import com.splab.springgames.domain.member.GameCardFixtureFactory
 import com.splab.springgames.domain.member.MemberFixtureFactory

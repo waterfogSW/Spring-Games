@@ -1,4 +1,4 @@
-package com.splab.springgames.application.member.service
+package com.splab.springgames.application.member.service.command
 
 import com.splab.springgames.application.game.port.outbound.GameCardRepositorySpy
 import com.splab.springgames.application.member.port.inbound.AddGameCardUseCase

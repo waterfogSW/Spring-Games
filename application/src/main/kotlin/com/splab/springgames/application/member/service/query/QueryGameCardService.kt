@@ -1,4 +1,4 @@
-package com.splab.springgames.application.member.service
+package com.splab.springgames.application.member.service.query
 
 import com.splab.springgames.application.game.port.inbound.QueryGameUseCase
 import com.splab.springgames.application.member.port.inbound.QueryGameCardUseCase

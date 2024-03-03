@@ -1,8 +1,8 @@
-package com.splab.springgames.application.game.service
+package com.splab.springgames.application.game.service.query
 
 import com.splab.springgames.application.game.port.inbound.QueryGameUseCase
 import com.splab.springgames.application.game.port.outbound.GameCardRepositorySpy
-import com.splab.springgames.application.member.service.QueryGameCardService
+import com.splab.springgames.application.member.service.query.QueryGameCardService
 import com.splab.springgames.domain.game.GameFixtureFactory
 import com.splab.springgames.domain.game.domain.Game
 import com.splab.springgames.domain.member.GameCardFixtureFactory

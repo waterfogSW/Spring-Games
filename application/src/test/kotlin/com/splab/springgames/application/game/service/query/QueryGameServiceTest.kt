@@ -1,6 +1,7 @@
-package com.splab.springgames.application.game.service
+package com.splab.springgames.application.game.service.query
 
 import com.splab.springgames.application.game.port.outbound.GameRepositorySpy
+import com.splab.springgames.application.game.service.QueryGameService
 import com.splab.springgames.domain.game.GameFixtureFactory
 import com.splab.springgames.domain.game.domain.Game
 import io.kotest.core.annotation.DisplayName
@@ -8,7 +9,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
 @DisplayName("게임 쿼리 서비스")
-class GameQueryServiceTest : DescribeSpec({
+class QueryGameServiceTest : DescribeSpec({
 
     val gameRepositorySpy = GameRepositorySpy()
     val sut = QueryGameService(gameRepositorySpy)
