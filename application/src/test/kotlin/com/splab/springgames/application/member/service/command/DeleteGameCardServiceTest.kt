@@ -1,6 +1,7 @@
 package com.splab.springgames.application.member.service.command
 
 import com.splab.springgames.application.game.port.outbound.GameCardRepositorySpy
+import com.splab.springgames.application.member.port.outbound.MemberEventNotifierSpy
 import com.splab.springgames.application.member.port.outbound.MemberRepositorySpy
 import com.splab.springgames.domain.member.GameCardFixtureFactory
 import com.splab.springgames.domain.member.MemberFixtureFactory
@@ -18,10 +19,18 @@ class DeleteGameCardServiceTest : DescribeSpec({
 
     val memberRepositorySpy = MemberRepositorySpy()
     val gameCardRepositorySpy = GameCardRepositorySpy()
+    val memberEventNotifier = MemberEventNotifierSpy()
     val sut = DeleteGameCardService(
         gameCardRepository = gameCardRepositorySpy,
-        memberRepository = memberRepositorySpy
+        memberRepository = memberRepositorySpy,
+        memberEventNotifier = memberEventNotifier
     )
+
+    afterEach {
+        memberRepositorySpy.clear()
+        gameCardRepositorySpy.clear()
+        memberEventNotifier.clear()
+    }
 
     describe("게임 카드 삭제") {
         context("ID값에 해당하는 게임 카드가 존재하는 경우") {
@@ -57,6 +66,33 @@ class DeleteGameCardServiceTest : DescribeSpec({
                     existsGameCardTotalPrice.value - gameCardPrice
                 )
                 updatedMember.level shouldBe Level.BRONZE
+            }
+        }
+
+        context("게임 카드 삭제로 인해 레벨이 변경된 경우") {
+            it("레벨 변경 알림을 보낸다.") {
+                // arrange
+                val existsGameCardCount = GameCardTotalCount(1)
+                val existsGameCardTotalPrice = GameCardTotalPrice(100.toBigDecimal())
+
+                val member: Member = MemberFixtureFactory.create(
+                    gameCardTotalCount = existsGameCardCount,
+                    gameCardTotalPrice = existsGameCardTotalPrice,
+                    level = Level.SILVER,
+                )
+                val gameCard: GameCard = GameCardFixtureFactory.create(
+                    memberId = member.id,
+                    price = 100.toBigDecimal()
+                )
+
+                gameCardRepositorySpy.save(gameCard)
+                memberRepositorySpy.save(member)
+
+                // act
+                sut.invoke(gameCard.id)
+
+                // assert
+                memberEventNotifier.count() shouldBe 1
             }
         }
 

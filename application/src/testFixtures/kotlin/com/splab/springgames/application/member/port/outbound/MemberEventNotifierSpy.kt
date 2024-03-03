@@ -12,8 +12,8 @@ class MemberEventNotifierSpy : MemberEventNotifier {
         bucket[member.id] = member
     }
 
-    fun findById(id: UUID): Member? {
-        return bucket[id]
+    fun count(): Int {
+        return bucket.size
     }
 
     fun clear() {

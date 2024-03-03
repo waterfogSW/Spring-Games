@@ -2,6 +2,7 @@ package com.splab.springgames.application.member.service.command
 
 import com.splab.springgames.application.member.port.inbound.AddGameCardUseCase
 import com.splab.springgames.application.member.port.outbound.GameCardRepository
+import com.splab.springgames.application.member.port.outbound.MemberEventNotifier
 import com.splab.springgames.application.member.port.outbound.MemberRepository
 import com.splab.springgames.domain.member.domain.GameCard
 import com.splab.springgames.domain.member.exception.GameCardExceptionType
@@ -15,6 +16,7 @@ import java.util.*
 class AddGameCardService(
     private val gameCardRepository: GameCardRepository,
     private val memberRepository: MemberRepository,
+    private val memberEventNotifier: MemberEventNotifier,
 ) : AddGameCardUseCase {
 
     @Transactional
@@ -33,7 +35,7 @@ class AddGameCardService(
         memberRepository
             .getById(command.memberId)
             .addGameCard(gameCard)
-            .updateLevelWith(memberGameCards)
+            .updateLevelWith(memberGameCards) { memberEventNotifier.notifyLevelUpdated(it) }
             .also { memberRepository.save(it) }
     }
 

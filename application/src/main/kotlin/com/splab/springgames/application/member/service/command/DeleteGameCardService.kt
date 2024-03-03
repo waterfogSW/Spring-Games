@@ -2,6 +2,7 @@ package com.splab.springgames.application.member.service.command
 
 import com.splab.springgames.application.member.port.inbound.DeleteGameCardUseCase
 import com.splab.springgames.application.member.port.outbound.GameCardRepository
+import com.splab.springgames.application.member.port.outbound.MemberEventNotifier
 import com.splab.springgames.application.member.port.outbound.MemberRepository
 import com.splab.springgames.domain.member.domain.GameCard
 import org.springframework.stereotype.Service
@@ -12,6 +13,7 @@ import java.util.*
 class DeleteGameCardService(
     private val gameCardRepository: GameCardRepository,
     private val memberRepository: MemberRepository,
+    private val memberEventNotifier: MemberEventNotifier,
 ) : DeleteGameCardUseCase {
 
     @Transactional
@@ -27,7 +29,7 @@ class DeleteGameCardService(
         memberRepository
             .getById(gameCard.memberId)
             .deleteGameCard(gameCard)
-            .updateLevelWith(memberGameCards)
+            .updateLevelWith(memberGameCards) { memberEventNotifier.notifyLevelUpdated(it) }
             .also { memberRepository.save(it) }
     }
 

@@ -2,11 +2,13 @@ package com.splab.springgames.application.member.service.command
 
 import com.splab.springgames.application.game.port.outbound.GameCardRepositorySpy
 import com.splab.springgames.application.member.port.inbound.AddGameCardUseCase
+import com.splab.springgames.application.member.port.outbound.MemberEventNotifierSpy
 import com.splab.springgames.application.member.port.outbound.MemberRepositorySpy
 import com.splab.springgames.domain.member.GameCardFixtureFactory
 import com.splab.springgames.domain.member.MemberFixtureFactory
 import com.splab.springgames.domain.member.domain.GameCard
 import com.splab.springgames.domain.member.domain.Member
+import com.splab.springgames.domain.member.enum.Level
 import com.splab.springgames.domain.member.vo.GameCardPrice
 import com.splab.springgames.domain.member.vo.GameCardSerialNumber
 import com.splab.springgames.domain.member.vo.GameCardTitle
@@ -23,14 +25,17 @@ class AddGameCardServiceTest : DescribeSpec({
 
     val gameCardRepository = GameCardRepositorySpy()
     val memberRepository = MemberRepositorySpy()
+    val memberEventNotifier = MemberEventNotifierSpy()
     val sut = AddGameCardService(
         gameCardRepository = gameCardRepository,
         memberRepository = memberRepository,
+        memberEventNotifier = memberEventNotifier
     )
 
     afterEach {
         gameCardRepository.clear()
         memberRepository.clear()
+        memberEventNotifier.clear()
     }
 
     describe("게임 카드 추가") {
@@ -69,6 +74,31 @@ class AddGameCardServiceTest : DescribeSpec({
                 updatedMember.gameCardTotalPrice.value shouldBe price
             }
         }
+
+        context("성공 - 카드 추가로 회원의 레벨이 변경되면") {
+            it("회원 정보를 업데이트 한 후, 레벨 변경 이벤트를 발행한다") {
+                // arrange
+                val member: Member = MemberFixtureFactory.create()
+                    .also { memberRepository.save(it) }
+
+                val command = AddGameCardUseCase.Command(
+                    memberId = member.id,
+                    gameId = UuidGenerator.create(),
+                    title = "test",
+                    serialNumber = 1234,
+                    price = 50.toBigDecimal(),
+                )
+
+                // act
+                sut.invoke(command)
+
+                // assert
+                val updatedMember: Member = memberRepository.getById(member.id)
+                updatedMember.level shouldBe Level.SILVER
+                memberEventNotifier.count() shouldBe 1
+            }
+        }
+
         context("실패 - 이미 해당 게임에 등록된 시리얼번호의 카드가 존재하면") {
             it("CustomException(code = GAME-CARD-002) 예외를 던진다") {
                 // arrange
