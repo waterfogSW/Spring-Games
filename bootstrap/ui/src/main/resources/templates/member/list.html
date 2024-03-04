@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container my-4">
-  <form action="#" th:action="@{/members}" method="get" class="mb-3">
+  <form action="#" th:action="@{/members}" method="get" class="mb-3" onsubmit="submitSearchForm(event)">
     <div class="form-row justify-content-end align-items-end">
       <div class="col-auto"> <!-- 이름 필드 -->
         이름 <label>
@@ -31,7 +31,8 @@
         <button type="submit" class="btn btn-outline-success">검색</button>
       </div>
       <div class="col-auto"> <!-- 등록 버튼 -->
-        <button type="button" onclick="location.href='/members/enrollment'" class="btn btn-primary">회원 등록
+        <button type="button" onclick="location.href='/members/enrollment'" class="btn btn-primary">
+          회원 등록
         </button>
       </div>
     </div>
@@ -60,4 +61,28 @@
   </table>
 </div>
 </body>
+<script>
+  function submitSearchForm(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const name = form.name.value;
+    const level = form.level.value;
+
+    let url = form.action;
+
+    const params = [];
+    if (name) {
+      params.push(`name=${encodeURIComponent(name)}`);
+    }
+    if (level) {
+      params.push(`level=${encodeURIComponent(level)}`);
+    }
+    if (params.length) {
+      url += '?' + params.join('&');
+    }
+
+    window.location.href = url;
+  }
+</script>
 </html>
