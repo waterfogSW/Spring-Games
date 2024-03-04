@@ -8,6 +8,7 @@ import com.splab.springgames.domain.member.vo.Email
 import com.splab.springgames.infrastructure.persistence.member.entity.MemberJpaEntity.Companion.toJpaEntity
 import com.splab.springgames.infrastructure.persistence.member.repository.MemberJpaRepository
 import com.splab.springgames.support.common.exception.CustomException
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -17,9 +18,20 @@ class MemberJpaAdapter(
 ) : MemberRepository {
 
     override fun save(member: Member) {
-        member
-            .toJpaEntity()
-            .also { memberJpaRepository.save(it) }
+        runCatching {
+            member
+                .toJpaEntity()
+                .also { memberJpaRepository.saveAndFlush(it) }
+        }.onFailure {
+            if (it is DataIntegrityViolationException) {
+                throw CustomException(
+                    type = MemberExceptionType.DUPLICATED_ENTITY,
+                    message = "이미 존재하는 회원입니다."
+                )
+            } else {
+                throw it
+            }
+        }
     }
 
     override fun searchByFilter(
