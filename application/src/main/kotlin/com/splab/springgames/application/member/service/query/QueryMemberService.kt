@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
+@Transactional(readOnly = true)
 class QueryMemberService(
     private val memberRepository: MemberRepository,
 ) : QueryMemberUseCase {
 
-    @Transactional(readOnly = true)
     override fun searchByFilter(
         name: String?,
         level: Level?

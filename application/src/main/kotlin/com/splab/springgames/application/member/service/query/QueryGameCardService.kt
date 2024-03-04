@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
+@Transactional(readOnly = true)
 class QueryGameCardService(
     private val gameCardRepository: GameCardRepository,
     private val queryGameUseCase: QueryGameUseCase,
 ) : QueryGameCardUseCase {
 
-    @Transactional(readOnly = true)
     override fun findAllInfosByMemberId(memberId: UUID): List<GameCardInfo> {
         return gameCardRepository
             .findAllByMemberId(memberId)
