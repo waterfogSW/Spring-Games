@@ -20,16 +20,14 @@ class MemberTest : DescribeSpec({
 
     describe("회원 생성") {
         context("성공 - 요청 값이 유효하면") {
-            it("회원을 생성하고 알림메서드를 호출한다") {
+            it("회원을 생성한다") {
                 // arrange
-                var isMemberCreated = false
                 val name = "홍길동"
                 val email = "test1234@test.com"
                 val registeredDate = LocalDate.now()
 
                 // act
-                val member: Member =
-                    Member.create(name, email, registeredDate) { isMemberCreated = true }
+                val member: Member = Member.create(name, email, registeredDate)
 
                 // assert
                 member.name shouldBe Name(name)
@@ -38,7 +36,6 @@ class MemberTest : DescribeSpec({
                 member.gameCardTotalCount.value shouldBe 0
                 member.gameCardTotalPrice.value shouldBe 0.toBigDecimal()
                 member.level shouldBe Level.BRONZE
-                isMemberCreated shouldBe true
             }
         }
     }
@@ -176,45 +173,6 @@ class MemberTest : DescribeSpec({
 
                 // assert
                 updatedMember.level shouldBe Level.BRONZE
-            }
-        }
-
-        context("회원의 레벨이 변경되면") {
-            it("회원 레벨 변경 알림 메서드를 호출한다.") {
-                // arrange
-                var isLevelChanged = false
-
-                val member: Member = MemberFixtureFactory.create(level = Level.BRONZE)
-                val gameId1: UUID = UuidGenerator.create()
-                val gameId2: UUID = UuidGenerator.create()
-                val gameCards: List<GameCard> = listOf(
-                    GameCardFixtureFactory.create(gameId = gameId1, price = 10.toBigDecimal()),
-                    GameCardFixtureFactory.create(gameId = gameId1, price = 10.toBigDecimal()),
-                    GameCardFixtureFactory.create(gameId = gameId2, price = 10.toBigDecimal()),
-                    GameCardFixtureFactory.create(gameId = gameId2, price = 10.toBigDecimal()),
-                )
-
-                // act
-                member.updateLevelWith(gameCards) { isLevelChanged = true }
-
-                // assert
-                isLevelChanged shouldBe true
-            }
-        }
-
-        context("회원의 레벨이 변경되지 않으면") {
-            it("회원 레벨 변경 알림 메서드를 호출하지 않는다.") {
-                // arrange
-                var isLevelChanged = false
-
-                val member: Member = MemberFixtureFactory.create(level = Level.BRONZE)
-                val gameCards: List<GameCard> = emptyList()
-
-                // act
-                member.updateLevelWith(gameCards) { isLevelChanged = true }
-
-                // assert
-                isLevelChanged shouldBe false
             }
         }
     }

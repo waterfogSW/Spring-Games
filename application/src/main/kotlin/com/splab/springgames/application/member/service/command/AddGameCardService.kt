@@ -5,6 +5,7 @@ import com.splab.springgames.application.member.port.outbound.GameCardRepository
 import com.splab.springgames.application.member.port.outbound.MemberEventNotifier
 import com.splab.springgames.application.member.port.outbound.MemberRepository
 import com.splab.springgames.domain.member.domain.GameCard
+import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.domain.member.exception.GameCardExceptionType
 import com.splab.springgames.domain.member.vo.GameCardSerialNumber
 import com.splab.springgames.support.common.exception.CustomException
@@ -32,11 +33,18 @@ class AddGameCardService(
 
         val memberGameCards: List<GameCard> = gameCardRepository.findAllByMemberId(command.memberId)
 
-        memberRepository
-            .getById(command.memberId)
+        val existsMember: Member = memberRepository.getById(command.memberId)
+
+        existsMember
             .addGameCard(gameCard)
-            .updateLevelWith(memberGameCards) { memberEventNotifier.notifyLevelUpdated(it) }
-            .also { memberRepository.save(it) }
+            .updateLevelWith(memberGameCards)
+            .also {
+                memberRepository.save(it)
+                notifyLevelUpdated(
+                    existsMember = existsMember,
+                    updatedMember = it,
+                )
+            }
     }
 
     private fun checkDuplicateSerialNumber(
@@ -53,6 +61,15 @@ class AddGameCardService(
                 type = GameCardExceptionType.INVALID_SERIAL_NUMBER_INPUT,
                 message = "해당 게임에 이미 등록된 카드 시리얼 번호입니다",
             )
+        }
+    }
+
+    private fun notifyLevelUpdated(
+        existsMember: Member,
+        updatedMember: Member,
+    ) {
+        if (existsMember.level != updatedMember.level) {
+            memberEventNotifier.notifyLevelUpdated(updatedMember)
         }
     }
 

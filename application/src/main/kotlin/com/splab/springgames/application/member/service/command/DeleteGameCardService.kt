@@ -5,6 +5,7 @@ import com.splab.springgames.application.member.port.outbound.GameCardRepository
 import com.splab.springgames.application.member.port.outbound.MemberEventNotifier
 import com.splab.springgames.application.member.port.outbound.MemberRepository
 import com.splab.springgames.domain.member.domain.GameCard
+import com.splab.springgames.domain.member.domain.Member
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -26,11 +27,27 @@ class DeleteGameCardService(
         val memberGameCards: List<GameCard> =
             gameCardRepository.findAllByMemberId(gameCard.memberId)
 
-        memberRepository
-            .getById(gameCard.memberId)
+        val existsMember: Member = memberRepository.getById(gameCard.memberId)
+
+        existsMember
             .deleteGameCard(gameCard)
-            .updateLevelWith(memberGameCards) { memberEventNotifier.notifyLevelUpdated(it) }
-            .also { memberRepository.save(it) }
+            .updateLevelWith(memberGameCards)
+            .also {
+                memberRepository.save(it)
+                notifyLevelUpdated(
+                    existsMember = existsMember,
+                    updatedMember = it,
+                )
+            }
+    }
+
+    private fun notifyLevelUpdated(
+        existsMember: Member,
+        updatedMember: Member,
+    ) {
+        if (existsMember.level != updatedMember.level) {
+            memberEventNotifier.notifyLevelUpdated(updatedMember)
+        }
     }
 
 }

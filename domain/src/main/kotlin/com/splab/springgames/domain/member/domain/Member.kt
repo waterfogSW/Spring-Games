@@ -48,17 +48,10 @@ data class Member(
         )
     }
 
-    fun updateLevelWith(
-        memberGameCards: List<GameCard>,
-        notifyAction: ((Member) -> Unit)? = null,
-    ): Member {
-        val validGameCards: List<GameCard> = memberGameCards.filter { it.isValidCard() }
-        val updatedMember: Member = this.copy(level = determineMemberLevel(validGameCards))
-
-        if (this.level != updatedMember.level) {
-            notifyAction?.invoke(updatedMember)
-        }
-        return updatedMember
+    fun updateLevelWith(memberGameCards: List<GameCard>): Member {
+        return memberGameCards
+            .filter { it.isValidCard() }
+            .let { this.copy(level = determineMemberLevel(it)) }
     }
 
     private fun determineMemberLevel(validGameCards: List<GameCard>): Level {
@@ -89,7 +82,6 @@ data class Member(
             name: String,
             email: String,
             registeredDate: LocalDate,
-            notifyAction: ((Member) -> Unit)? = null,
         ): Member {
             return Member(
                 name = Name.create(name),
@@ -98,9 +90,8 @@ data class Member(
                 level = Level.BRONZE,
                 gameCardTotalCount = GameCardTotalCount(0),
                 gameCardTotalPrice = GameCardTotalPrice(0.toBigDecimal())
-            ).also { notifyAction?.invoke(it) }
+            )
         }
-
     }
 
 }

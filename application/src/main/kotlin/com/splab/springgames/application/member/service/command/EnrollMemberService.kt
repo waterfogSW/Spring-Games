@@ -8,6 +8,7 @@ import com.splab.springgames.domain.member.exception.MemberExceptionType
 import com.splab.springgames.domain.member.vo.Email
 import com.splab.springgames.support.common.exception.CustomException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class EnrollMemberService(
@@ -15,6 +16,7 @@ class EnrollMemberService(
     private val memberEventNotifier: MemberEventNotifier,
 ) : EnrollMemberUseCase {
 
+    @Transactional
     override fun invoke(command: EnrollMemberUseCase.Command) {
         checkDuplicatedEmail(command.email)
 
@@ -22,8 +24,10 @@ class EnrollMemberService(
             name = command.name,
             email = command.email,
             registeredDate = command.registeredDate,
-        ) { memberEventNotifier.notifyLevelUpdated(it) }
-            .also { memberRepository.save(it) }
+        ).also {
+            memberRepository.save(it)
+            memberEventNotifier.notifyLevelUpdated(it)
+        }
     }
 
     private fun checkDuplicatedEmail(email: String) {
