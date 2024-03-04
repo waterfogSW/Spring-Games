@@ -7,9 +7,9 @@ import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.domain.member.exception.MemberExceptionType
 import com.splab.springgames.domain.member.vo.Email
 import com.splab.springgames.support.common.exception.CustomException
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
-@Component
+@Service
 class EnrollMemberService(
     private val memberRepository: MemberRepository,
     private val memberEventNotifier: MemberEventNotifier,
