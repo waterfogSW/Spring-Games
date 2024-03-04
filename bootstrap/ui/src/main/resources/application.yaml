@@ -14,4 +14,4 @@ spring:
       on-profile: local
   docker:
     compose:
-      file: ./bootstrap/ui/compose-local.yaml
+      file: classpath:compose-local.yaml
