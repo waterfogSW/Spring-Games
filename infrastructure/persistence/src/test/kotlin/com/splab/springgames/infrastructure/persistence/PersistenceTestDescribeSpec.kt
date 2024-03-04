@@ -9,7 +9,7 @@ import java.io.File
 
 @SpringBootTest
 @Import(PersistenceTestApplication::class)
-@ActiveProfiles("test")
+@ActiveProfiles("persistence", "persistence-test")
 abstract class PersistenceTestDescribeSpec(body: DescribeSpec.() -> Unit = {}) :
     DescribeSpec(body) {
 

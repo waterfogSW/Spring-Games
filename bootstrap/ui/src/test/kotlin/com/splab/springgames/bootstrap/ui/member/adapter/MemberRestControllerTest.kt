@@ -35,7 +35,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import java.time.LocalDate
 import java.util.*
 
-@ActiveProfiles("test")
+@ActiveProfiles("bootstrap-test")
 @SpringBootTest
 @DisplayName("[Bootstrap][UI] 회원 API")
 class MemberRestControllerTest(
