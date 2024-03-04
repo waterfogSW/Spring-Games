@@ -7,6 +7,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script th:src="@{/js/api.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -68,13 +69,6 @@
   const getElement = id => document.getElementById(id);
   const memberId = window.location.pathname.split('/')[2]
   const handleErrorMessage = (elementId, message) => getElement(elementId).innerText = message;
-  const updateMember = async data => {
-    return await fetch(`/api/members/${memberId}`, {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data),
-    });
-  };
 
   getElement('updateBtn').addEventListener('click', async function (e) {
     e.preventDefault();
@@ -86,7 +80,7 @@
       registeredDate: getElement('registeredDate').value || '',
     };
 
-    const response = await updateMember(formData);
+    const response = await fetchUpdateMember(memberId, formData);
 
     if (response.status === 204) {
       alert('수정되었습니다.');

@@ -7,6 +7,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script th:src="@{/js/api.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -37,13 +38,6 @@
 <script>
   const getElement = id => document.getElementById(id);
   const handleErrorMessage = (elementId, message) => getElement(elementId).innerText = message;
-  const createMember = async data => {
-    return await fetch('/api/members', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data),
-    });
-  };
 
   getElement('submitBtn').addEventListener('click', async function (e) {
     e.preventDefault();
@@ -55,7 +49,7 @@
       registeredDate: getElement('registeredDate').value || '',
     };
 
-    const response = await createMember(formData);
+    const response = await fetchCreateMember(formData);
 
     if (response.status === 201) {
       alert('등록되었습니다.');

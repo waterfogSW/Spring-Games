@@ -7,6 +7,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script th:src="@{/js/api.js}"></script>
 </head>
 <body>
 <div class="container my-4">
@@ -89,7 +90,7 @@
   getElement('deleteBtn').addEventListener('click', async function (e) {
     e.preventDefault();
     if (confirm("정말로 삭제할까요?")) {
-      deleteMember(memberId)
+      fetchDeleteMember(memberId)
       .then(response => {
         if (response.status === 204) {
           alert('삭제되었습니다.');
@@ -98,11 +99,6 @@
       });
     }
   });
-  const deleteMember = async id => {
-    return await fetch(`/api/members/${id}`, {
-      method: 'DELETE',
-    });
-  };
 
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.deleteGameCardBtn').forEach(button => {
@@ -116,9 +112,7 @@
 
     async function deleteGameCard(gameCardId) {
       try {
-        const response = await fetch(`/api/members/${memberId}/game-cards/${gameCardId}`, {
-          method: 'DELETE',
-        });
+        const response = await fetchDeleteGameCard(memberId, gameCardId)
         if (response.ok) {
           alert('게임 카드가 성공적으로 삭제되었습니다.');
           location.reload();
