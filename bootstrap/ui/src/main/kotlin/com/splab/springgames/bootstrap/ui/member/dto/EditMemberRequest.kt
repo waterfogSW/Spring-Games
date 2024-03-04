@@ -15,21 +15,11 @@ data class EditMemberRequest(
 
     fun toCommandWith(memberId: UUID): EditMemberUseCase.Command {
         return EditMemberUseCase.Command(
-            memberId = getIdOrThrow(memberId),
+            memberId = memberId,
             name = getNameOrThrow(name),
             email = getEmailOrThrow(email),
             registeredDate = getRegisteredDateOrThrow(registeredDate)
         )
-    }
-
-    private fun getIdOrThrow(id: UUID?): UUID {
-        if (id == null) {
-            throw CustomException(
-                type = MemberExceptionType.INVALID_ID_INPUT,
-                message = "ID는 필수 입력값입니다."
-            )
-        }
-        return id
     }
 
     private fun getNameOrThrow(name: String?): String {

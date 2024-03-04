@@ -50,6 +50,8 @@ subprojects {
         testImplementation("io.kotest.extensions:kotest-extensions-spring:${Version.KOTEST_EXTENSIONS_SPRING}")
         testImplementation("io.kotest.extensions:kotest-extensions-testcontainers:${Version.KOTEST_EXTENSIONS_TESTCONTAINERS}")
         testImplementation("org.testcontainers:junit-jupiter:${Version.TESTCONTAINERS}")
+
+        testRuntimeOnly("com.h2database:h2:${Version.H2}")
     }
 
     java {
