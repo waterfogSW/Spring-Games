@@ -1,10 +1,10 @@
 package com.splab.springgames.application.game.port.outbound
 
 import com.splab.springgames.domain.game.domain.Game
-import java.util.UUID
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
-class GameRepositorySpy: GameRepository {
+class GameRepositorySpy : GameRepository {
 
     private val bucket = ConcurrentHashMap<UUID, Game>()
 

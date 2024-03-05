@@ -101,9 +101,9 @@
     }
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.deleteGameCardBtn').forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         const gameCardId = this.getAttribute('data-id');
         if (confirm('이 게임 카드를 정말 삭제하시겠습니까?')) {
           deleteGameCard(gameCardId);

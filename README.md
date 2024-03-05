@@ -214,14 +214,14 @@ Unique Key + SaveAndFlush를 사용해 중복 요청을 방지했습니다.
 2. WireMock
     - 외부 API 호출을 위한 테스트를 위해서 직접 외부 API를 호출하지 않고, WireMock을 사용해 외부 API의 응답을 Mocking해 테스트 했습니다.
 3. UUID v7
-     - DB의 채번을 줄이고, 시간 기반으로 생성되어 정렬이 가능하다는 장점이 있어 UUID v7를 사용했습니다.
+    - DB의 채번을 줄이고, 시간 기반으로 생성되어 정렬이 가능하다는 장점이 있어 UUID v7를 사용했습니다.
 4. java-test-fixtures
     - 테스트에서 사용하는 Stub 객체를 별도의 패키지에 구현해 테스트해 java-test-fixtures 플러그인을 활용했습니다.
 
-
 ### 예외 처리 관련
 
-- 예외의 경우 별도의 CustomException을 정의하고, 속성으로 CustomExceptionType을 가지도록 했습니다. CustomExceptionType은 도메인 별로 정의되어 code를 통해 뷰에서 예외를 구분하여 처리할 수 있도록 구현하였습니다.
+- 예외의 경우 별도의 CustomException을 정의하고, 속성으로 CustomExceptionType을 가지도록 했습니다. CustomExceptionType은 도메인 별로
+  정의되어 code를 통해 뷰에서 예외를 구분하여 처리할 수 있도록 구현하였습니다.
 
 ```kotlin
 class CustomException(
@@ -254,5 +254,4 @@ enum class GameCardExceptionType(override val code: String) : CustomExceptionTyp
 
 ```
 
-
-### 
+###  

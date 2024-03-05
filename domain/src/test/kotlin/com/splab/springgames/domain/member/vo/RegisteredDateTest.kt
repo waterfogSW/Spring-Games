@@ -5,9 +5,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import net.bytebuddy.asm.Advice.Local
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @DisplayName("[Domain] 가입일")
 class RegisteredDateTest : DescribeSpec({

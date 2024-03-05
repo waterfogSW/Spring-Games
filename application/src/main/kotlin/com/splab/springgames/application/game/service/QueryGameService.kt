@@ -10,7 +10,7 @@ import java.util.*
 @Service
 class QueryGameService(
     private val gameRepository: GameRepository,
-): QueryGameUseCase {
+) : QueryGameUseCase {
 
     @Transactional(readOnly = true)
     override fun findAll(): List<Game> {

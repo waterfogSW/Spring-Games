@@ -4,7 +4,7 @@ import com.splab.springgames.domain.game.domain.Game
 import com.splab.springgames.domain.game.vo.GameName
 import com.splab.springgames.domain.member.domain.GameCard
 import java.math.BigDecimal
-import java.util.UUID
+import java.util.*
 
 data class GameCardInfo(
     val id: UUID,

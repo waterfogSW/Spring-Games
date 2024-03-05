@@ -6,7 +6,7 @@ fi
 
 BRANCH_NAME=$(git symbolic-ref --short HEAD)
 BRANCH_NAME="${BRANCH_NAME##*/}"
-ISSUE_ID=`echo $BRANCH_NAME | egrep -o '[0-9]+'`
+ISSUE_ID=$(echo $BRANCH_NAME | egrep -o '[0-9]+')
 
 BRANCH_EXCLUDED=$(printf "%s\n" "${BRANCHES_TO_SKIP[@]}" | grep -c "^$BRANCH_NAME$")
 BRANCH_IN_COMMIT=$(grep -c "$ISSUE_ID" $1)

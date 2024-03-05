@@ -11,7 +11,7 @@ import java.util.*
 @Component
 class GameJpaAdapter(
     private val gameJpaRepository: GameJpaRepository,
-) : GameRepository{
+) : GameRepository {
 
     override fun findAll(): List<Game> {
         return gameJpaRepository

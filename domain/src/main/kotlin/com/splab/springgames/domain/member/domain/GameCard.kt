@@ -21,6 +21,7 @@ data class GameCard(
     }
 
     companion object {
+
         fun create(
             gameId: UUID,
             userId: UUID,

@@ -1,7 +1,7 @@
 package com.splab.springgames.application.game.port.outbound
 
 import com.splab.springgames.domain.game.domain.Game
-import java.util.UUID
+import java.util.*
 
 interface GameRepository {
 
