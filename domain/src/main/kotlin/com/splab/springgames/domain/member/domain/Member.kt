@@ -24,15 +24,15 @@ data class Member(
 
     fun addGameCard(gameCard: GameCard): Member {
         return this.copy(
-            gameCardTotalCount = GameCardTotalCount(this.gameCardTotalCount.value + 1),
-            gameCardTotalPrice = GameCardTotalPrice(this.gameCardTotalPrice.value + gameCard.price.value)
+            gameCardTotalCount = this.gameCardTotalCount + 1,
+            gameCardTotalPrice = this.gameCardTotalPrice + gameCard.price
         )
     }
 
     fun deleteGameCard(gameCard: GameCard): Member {
         return this.copy(
-            gameCardTotalCount = GameCardTotalCount(this.gameCardTotalCount.value - 1),
-            gameCardTotalPrice = GameCardTotalPrice(this.gameCardTotalPrice.value - gameCard.price.value)
+            gameCardTotalCount = this.gameCardTotalCount - 1,
+            gameCardTotalPrice = this.gameCardTotalPrice - gameCard.price
         )
     }
 

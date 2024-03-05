@@ -9,4 +9,12 @@ value class GameCardTotalCount(val value: Int) {
         }
     }
 
+    operator fun plus(other: Int): GameCardTotalCount {
+        return GameCardTotalCount(this.value + other)
+    }
+
+    operator fun minus(other: Int): GameCardTotalCount {
+        return GameCardTotalCount(this.value - other)
+    }
+
 }

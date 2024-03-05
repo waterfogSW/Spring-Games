@@ -11,4 +11,12 @@ value class GameCardTotalPrice(val value: BigDecimal) {
         }
     }
 
+    operator fun plus(price: GameCardPrice): GameCardTotalPrice {
+        return GameCardTotalPrice(this.value + price.value)
+    }
+
+    operator fun minus(price: GameCardPrice): GameCardTotalPrice {
+        return GameCardTotalPrice(this.value - price.value)
+    }
+
 }
