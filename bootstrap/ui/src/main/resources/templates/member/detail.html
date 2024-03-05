@@ -10,14 +10,15 @@
   <script th:src="@{/js/api.js}"></script>
 </head>
 <body>
+
 <div class="container my-4">
+  <h2>회원 정보</h2>
   <div class="mb-3">
     <button onclick="location.href='/members'" class="btn btn-outline-secondary">돌아가기</button>
     <a th:href="@{/members/{id}/edit(id=${member.id})}" class="btn btn-outline-secondary">수정</a>
     <button id="deleteBtn" class="btn btn-danger">삭제</button>
   </div>
   <div>
-    <h2>회원 정보</h2>
     <table class="table info-table">
       <tbody>
       <tr>
