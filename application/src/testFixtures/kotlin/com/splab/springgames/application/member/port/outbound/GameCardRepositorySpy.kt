@@ -1,6 +1,5 @@
-package com.splab.springgames.application.game.port.outbound
+package com.splab.springgames.application.member.port.outbound
 
-import com.splab.springgames.application.member.port.outbound.GameCardRepository
 import com.splab.springgames.domain.member.domain.GameCard
 import com.splab.springgames.domain.member.vo.GameCardSerialNumber
 import java.util.*
@@ -37,15 +36,6 @@ class GameCardRepositorySpy : GameCardRepository {
 
     override fun findById(gameCardId: UUID): GameCard? {
         return bucket[gameCardId]
-    }
-
-    fun findByGameIdAndSerialNumber(
-        gameId: UUID,
-        serialNumber: Long
-    ): GameCard? {
-        return bucket.values.find {
-            it.gameId == gameId && it.serialNumber.value == serialNumber
-        }
     }
 
     fun clear() {

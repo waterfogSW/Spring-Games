@@ -1,6 +1,6 @@
 package com.splab.springgames.application.member.service.command
 
-import com.splab.springgames.application.game.port.outbound.GameCardRepositorySpy
+import com.splab.springgames.application.member.port.outbound.GameCardRepositorySpy
 import com.splab.springgames.application.member.port.inbound.AddGameCardUseCase
 import com.splab.springgames.application.member.port.outbound.MemberEventNotifierSpy
 import com.splab.springgames.application.member.port.outbound.MemberRepositorySpy
