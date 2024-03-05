@@ -7,6 +7,9 @@ spring:
     include:
       - persistence
       - client
+  threads:
+    virtual:
+      enabled: true
 ---
 spring:
   config:

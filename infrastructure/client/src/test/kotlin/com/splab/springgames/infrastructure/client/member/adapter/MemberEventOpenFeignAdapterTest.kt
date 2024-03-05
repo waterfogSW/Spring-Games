@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.matchingJsonPath
 import com.github.tomakehurst.wiremock.client.WireMock.post
 import com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor
 import com.github.tomakehurst.wiremock.client.WireMock.urlMatching
+import com.splab.springgames.application.member.port.outbound.MemberEventNotifier
 import com.splab.springgames.domain.member.MemberFixtureFactory
 import com.splab.springgames.domain.member.domain.Member
 import com.splab.springgames.infrastructure.client.ClientTestDescribeSpec
@@ -13,9 +14,9 @@ import com.splab.springgames.infrastructure.client.common.properties.SlackConfig
 import io.kotest.core.annotation.DisplayName
 import wiremock.org.eclipse.jetty.http.HttpStatus
 
-@DisplayName("[Client] 회원 이벤트 OpenFeign 어댑터")
+@DisplayName("[Client] 회원 이벤트 알림 어댑터")
 class MemberEventOpenFeignAdapterTest(
-    private val sut: MemberEventOpenFeignAdapter,
+    private val sut: MemberEventNotifier,
     private val properties: SlackConfigurationProperties
 ) : ClientTestDescribeSpec({
 
@@ -32,30 +33,33 @@ class MemberEventOpenFeignAdapterTest(
     }
 
     describe("notifyLevelUpdated") {
-        it("레벨 변경 알림을 보낸다") {
-            // arrange
-            val member: Member = MemberFixtureFactory.create()
-            wireMockServer.stubFor(
-                post(urlMatching(SLACK_WEBHOOK_PATH))
-                    .willReturn(aResponse().withStatus(HttpStatus.OK_200))
-            )
+        context("[성공] 알림 전송에 성공하면") {
 
-            // act
-            sut.notifyLevelUpdated(member)
+            it("레벨 변경 알림을 보낸다") {
+                // arrange
+                val member: Member = MemberFixtureFactory.create()
+                wireMockServer.stubFor(
+                    post(urlMatching(SLACK_WEBHOOK_PATH))
+                        .willReturn(aResponse().withStatus(HttpStatus.OK_200))
+                )
 
-            // assert
-            val notificationText =
-                """
+                // act
+                sut.notifyLevelUpdated(member).get()
+
+                // assert
+                val notificationText =
+                    """
                 지원자명 : ${properties.serverId}
                 회원 ID : ${member.id}
                 회원명 : ${member.name.value}
                 새롭게 부여된 레벨 : ${member.level}
                 """.trimIndent()
 
-            wireMockServer.verify(
-                postRequestedFor(urlMatching(SLACK_WEBHOOK_PATH))
-                    .withRequestBody(matchingJsonPath("$.text", equalTo(notificationText)))
-            )
+                wireMockServer.verify(
+                    postRequestedFor(urlMatching(SLACK_WEBHOOK_PATH))
+                        .withRequestBody(matchingJsonPath("$.text", equalTo(notificationText)))
+                )
+            }
         }
     }
 

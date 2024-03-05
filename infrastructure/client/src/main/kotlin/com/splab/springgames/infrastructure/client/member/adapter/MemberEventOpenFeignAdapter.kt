@@ -6,6 +6,7 @@ import com.splab.springgames.infrastructure.client.common.properties.SlackConfig
 import com.splab.springgames.infrastructure.client.member.client.MemberEventSlackNotificationClient
 import com.splab.springgames.infrastructure.client.member.dto.SlackNotificationRequest
 import org.springframework.stereotype.Component
+import java.util.concurrent.CompletableFuture
 
 @Component
 class MemberEventOpenFeignAdapter(
@@ -13,10 +14,11 @@ class MemberEventOpenFeignAdapter(
     private val slackConfigurationProperties: SlackConfigurationProperties,
 ) : MemberEventNotifier {
 
-    override fun notifyLevelUpdated(member: Member) {
+    override fun notifyLevelUpdated(member: Member): CompletableFuture<Unit> {
         val message = buildMessage(member)
         val request = SlackNotificationRequest(message)
         memberEventSlackNotificationClient.notifyLevelUpdated(request)
+        return CompletableFuture.completedFuture(Unit)
     }
 
     private fun buildMessage(currentMember: Member): String {
