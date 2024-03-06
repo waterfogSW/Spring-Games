@@ -15,6 +15,7 @@ interface MemberJpaRepository : JpaRepository<MemberJpaEntity, UUID> {
             from member 
             where (:name is null or MATCH(name) against(+:name in boolean mode))
             AND (:level is null or level = :level)
+            ORDER BY registered_date DESC
         """,
         nativeQuery = true
     )
